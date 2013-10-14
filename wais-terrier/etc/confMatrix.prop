@@ -1,0 +1,18 @@
+
+
+#the folder used to print out the results
+folderOut=/Users/antoniopenta/Documents/DatiRicerca/dataChallenge/DocQ7Cleaned/trigramWord/matrix
+
+#the suffix used to print the matrices names
+
+suffixFileMatrix=matrices
+
+#the name of the files used to plot the corrispondence between the the row of the matrices and the fileName
+nameFileIndexFeatures=featuresMap.txt
+
+#the name of the files used to plot the corrispondence beteween the column of the matrices and the features
+nameFileIndexFiles=fileMap.txt
+
+
+#the suffixused to plot the stat of the values of the matrices
+suffixFileStatistics=stat

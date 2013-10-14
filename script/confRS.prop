@@ -1,0 +1,26 @@
+#running the code as following (at least 2g ram)
+#level of logging Info,Fine,Finer
+
+#java -jar -Xmx2g -Dedu.southampton.wais.utility.LogLevel=Finer FeatureExtractionByPipe.jar confFeatureExtraction.prop
+
+
+
+
+#folder for collection input and output
+basefolderIN=/home/antoniodesktop/Documents/data/iestremedata/allFile
+#basefolderIN=/Users/antoniopenta/Documents/workspaceReligionSentiment/iestremedata/allFileProva
+#basefolderOut=/Users/antoniopenta/Documents/workspaceReligionSentiment/iestremedata/allSentence
+basefolderOut=/home/antoniodesktop/Documents/data/iestremedata/allSentence
+
+#folder for nlp models
+#nlpFolder=/home/antonio/code/workspaceDataChallenge2/TextClassificationEngine4Crowd/nlp/data
+#nlpFolder=/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata
+nlpFolder=/home/antoniodesktop/Documents/data/nlpdata
+#nlp variables
+
+
+minimumNumberWordForSentence=3
+
+#pipe strategy code numbers
+
+	

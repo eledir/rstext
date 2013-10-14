@@ -1,0 +1,40 @@
+
+from nltk.stem.wordnet import WordNetLemmatizer
+
+pathI1='/home/antoniodesktop/Documents/data/iestremedata/allSentence/adj.txt'
+pathI2='/home/antoniodesktop/Documents/data/iestremedata/allSentence/adverb.txt'
+pathI3='/home/antoniodesktop/Documents/data/iestremedata/allSentence/noun.txt'
+pathI4='/home/antoniodesktop/Documents/data/iestremedata/allSentence/verb.txt'
+
+pathO1='/home/antoniodesktop/Documents/data/iestremedata/allSentence/allTerm.txt'
+
+lf=[]
+
+l=list(set(map(lambda x:x.strip(),open(pathI1).readlines())));
+lf.extend(l)
+
+l=list(set(map(lambda x:x.strip(),open(pathI2).readlines())));
+lf.extend(l)
+
+l=list(set(map(lambda x:x.strip(),open(pathI3).readlines())));
+lf.extend(l)
+
+
+
+l=list(set(map(lambda x:x.strip(),open(pathI4).readlines())));
+
+lemmatizer = WordNetLemmatizer()
+
+lverblemma=[]
+for item in l:
+	lemma=lemmatizer.lemmatize(item, 'v')
+	lverblemma.append(lemma)
+
+lf.extend(lverblemma)
+
+
+f=open(pathO1,'w')
+f.write('\n'.join(lf));
+f.close()
+
+print 'done'
