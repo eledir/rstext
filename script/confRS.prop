@@ -7,20 +7,20 @@
 
 
 #folder for collection input and output
-basefolderIN=/home/antoniodesktop/Documents/data/iestremedata/allFile
+basefolderIN=/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/good/
 #basefolderIN=/Users/antoniopenta/Documents/workspaceReligionSentiment/iestremedata/allFileProva
 #basefolderOut=/Users/antoniopenta/Documents/workspaceReligionSentiment/iestremedata/allSentence
-basefolderOut=/home/antoniodesktop/Documents/data/iestremedata/allSentence
+basefolderOut=/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/allSentenceGood/
 
 #folder for nlp models
-#nlpFolder=/home/antonio/code/workspaceDataChallenge2/TextClassificationEngine4Crowd/nlp/data
 #nlpFolder=/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata
 nlpFolder=/home/antoniodesktop/Documents/data/nlpdata
+
 #nlp variables
 
 
 minimumNumberWordForSentence=3
 
-#pipe strategy code numbers
+
 
 	
