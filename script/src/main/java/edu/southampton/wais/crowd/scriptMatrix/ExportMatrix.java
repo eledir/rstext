@@ -27,8 +27,8 @@ import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.types.Label;
 import cern.colt.matrix.impl.SparseDoubleMatrix2D;
-import edu.southampton.wais.STPLibrary.utility.ColtUtility;
 import edu.southampton.wais.crowd.scriptMallat.MallatClassiFicationScript;
+import edu.southampton.wais.utility.general.ColtUtility;
 
 
 public class ExportMatrix {

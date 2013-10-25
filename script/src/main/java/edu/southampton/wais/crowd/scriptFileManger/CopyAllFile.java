@@ -11,7 +11,7 @@ import edu.southampton.wais.STPLibrary.collection.CollectionTextFile;
 import edu.southampton.wais.STPLibrary.file.TextFile;
 import edu.southampton.wais.STPLibrary.paramater.Parameter;
 import edu.southampton.wais.STPLibrary.utility.IOUtility4STPLibrary;
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.general.Logger;
 
 public class CopyAllFile {
 

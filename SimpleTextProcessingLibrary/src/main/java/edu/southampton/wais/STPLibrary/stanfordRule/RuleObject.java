@@ -57,8 +57,8 @@ public class RuleObject implements Iterable<String> {
 
 	public void run() {
 
-		Table<String, String, String> tableDepe = this.sm.getTableGovernor();
-
+		Table<String, String, String> tableDepe = this.sm.getTableDepGovern();
+		
 		for (TagXObject dep : TagXObject.values()) {
 
 			Collection<String> s = tableDepe.row(dep.toString()).values();

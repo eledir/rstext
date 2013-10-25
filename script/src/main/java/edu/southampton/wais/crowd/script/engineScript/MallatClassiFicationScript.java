@@ -33,7 +33,7 @@ import cc.mallet.pipe.iterator.FileIterator;
 import cc.mallet.types.Alphabet;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.Randoms;
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.general.Logger;
 
 public class MallatClassiFicationScript {
 

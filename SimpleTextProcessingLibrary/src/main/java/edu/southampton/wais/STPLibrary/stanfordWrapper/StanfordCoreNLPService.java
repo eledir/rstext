@@ -21,7 +21,6 @@ import com.google.common.collect.Table;
 
 import yagoo.javatools.parsers.PlingStemmer;
 
-import edu.southampton.wais.STPLibrary.dataStructure.IntegerSingleNode;
 import edu.southampton.wais.STPLibrary.model.AnnotatedWord;
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.model.TripleModel;
@@ -31,9 +30,10 @@ import edu.southampton.wais.STPLibrary.processor.ExtractTripleStanfordDependancy
 import edu.southampton.wais.STPLibrary.stanfordRule.RuleObject;
 import edu.southampton.wais.STPLibrary.stanfordRule.RuleSubject;
 import edu.southampton.wais.STPLibrary.stanfordRule.RuleVerb;
-import edu.southampton.wais.STPLibrary.utility.IOFileUtility;
 import edu.southampton.wais.STPLibrary.utility.SentenceModelUtility;
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
+import edu.southampton.wais.utility.general.IOFileUtility;
+import edu.southampton.wais.utility.general.Logger;
 
 import edu.stanford.nlp.dcoref.CorefChain;
 import edu.stanford.nlp.dcoref.CorefCoreAnnotations.CorefChainAnnotation;
@@ -151,7 +151,14 @@ public class StanfordCoreNLPService {
 		for (List<CoreLabel> lcl : classifier.classify(sm.getBody())) {
 			for (CoreLabel cl : lcl) {
 				index++;
+				
 				String ne = cl.get(CoreAnnotations.AnswerAnnotation.class);
+				
+				
+				Logger.logFiner(index+" "+cl.word()+" "+ne);
+				
+				
+				
 
 				sm.addNer(index, ne);
 
@@ -277,18 +284,18 @@ public class StanfordCoreNLPService {
 		
 		tex="It can expand each surah as a coherent discourse, arranging surahs into pairs, and establishing seven major surah divisions - the entire Quran thus emerges as a well-connected and systematic book";
 		
-		try {
-	    tex=FileUtils.readFileToString(new File("prova.txt"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		try {
+//	    tex=FileUtils.readFileToString(new File("prova.txt"));
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		
 		
 		String dir = "/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata";
 
 		
-		dir="/home/antoniodesktop/Documents/data/nlpdata";
+		//dir="/home/antoniodesktop/Documents/data/nlpdata";
 
 		Pattern patternSentValidation = Pattern.compile("[a-zA-Z\\-]+");
 
@@ -355,8 +362,14 @@ public class StanfordCoreNLPService {
 
 			System.out.println(sm.getNerMultiMap());
 
+			
+			System.out.println(sm.getTableDepGovern());
+			
 			System.out.println(" ---------------");
 
+
+			
+			
 			
 			//List<TripleModel>triple=ExtractTripleStanfordDependancy.extract(sm);
 			

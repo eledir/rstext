@@ -57,7 +57,7 @@ public class RuleSubject implements Iterable<String> {
 
 	public void run() {
 
-		Table<String, String, String> tableGov = this.sm.getTableGovernor();
+		Table<String, String, String> tableGov = this.sm.getTableDepGovern();
 
 		for (TagXSubj dep : TagXSubj.values()) {
 
@@ -84,7 +84,7 @@ public class RuleSubject implements Iterable<String> {
 
 		}
 
-		Table<String, String, String> tableDep = this.sm.getTableDependent();
+		Table<String, String, String> tableDep = this.sm.getTableDepDep();
 
 		for (TagSubjX dep : TagSubjX.values()) {
 

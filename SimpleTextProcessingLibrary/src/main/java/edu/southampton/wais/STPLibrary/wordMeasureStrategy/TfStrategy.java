@@ -11,8 +11,6 @@ import edu.southampton.wais.STPLibrary.model.DocumentModelByWord;
 import edu.southampton.wais.STPLibrary.model.VocabularyMeasure;
 import edu.southampton.wais.STPLibrary.model.VocabularyModel;
 import edu.southampton.wais.STPLibrary.model.WordFeatures;
-import edu.southampton.wais.STPLibrary.utility.ColtUtility;
-import edu.southampton.wais.STPLibrary.utility.MathUtility;
 
 public class TfStrategy implements WordModelProcessingStrategy {
 

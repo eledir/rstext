@@ -12,10 +12,10 @@ import org.apache.commons.io.IOUtils;
 
 import com.google.common.collect.Sets;
 
-import edu.southampton.wais.STPLibrary.dataStructure.IntegerSingleNode;
 import edu.southampton.wais.STPLibrary.model.DocumentModelBySentence;
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
-import edu.southampton.wais.utility.UtilitySearialization;
+import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
+import edu.southampton.wais.utility.general.UtilitySearialization;
 
 public class CreateListNounLemma {
 

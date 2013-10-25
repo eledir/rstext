@@ -71,7 +71,7 @@ public class RuleVerb implements Iterable<String> {
 
 	public void run() {
 
-		Table<String, String, String> tableDepe = this.sm.getTableDependent();
+		Table<String, String, String> tableDepe = this.sm.getTableDepDep();
 
 		for (TagVerbX dep : TagVerbX.values()) {
 

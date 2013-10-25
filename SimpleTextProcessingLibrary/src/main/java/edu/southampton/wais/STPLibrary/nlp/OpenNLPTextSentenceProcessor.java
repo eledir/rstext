@@ -11,7 +11,7 @@ import edu.southampton.wais.STPLibrary.collection.CollectionTextFile;
 import edu.southampton.wais.STPLibrary.paramater.Parameter;
 import edu.southampton.wais.STPLibrary.processor.SentenceTokenizerProcessor;
 import edu.southampton.wais.STPLibrary.utility.CollectionSentenceModelUtility;
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.general.Logger;
 
 
 import opennlp.tools.sentdetect.SentenceDetectorME;

@@ -4,11 +4,9 @@ import org.openjena.atlas.lib.MultiSet;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableMultiset;
-import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
 
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
-import net.sf.extjwnl.JWNLException;
 import net.sf.extjwnl.data.IndexWord;
 import net.sf.extjwnl.data.POS;
 import net.sf.extjwnl.data.Synset;

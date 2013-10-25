@@ -2,7 +2,7 @@ package edu.southampton.wais.crowd;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.general.Logger;
 
 
 

@@ -12,11 +12,11 @@ import org.apache.commons.io.FileUtils;
 
 import edu.southampton.wais.STPLibrary.collection.CollectionTextFile;
 import edu.southampton.wais.STPLibrary.file.TextFile;
-import edu.southampton.wais.STPLibrary.utility.IOFileUtility;
 import edu.southampton.wais.STPLibrary.utility.IOUtility4STPLibrary;
 import org.apache.commons.io.FileUtils;
 
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.general.IOFileUtility;
+import edu.southampton.wais.utility.general.Logger;
 
 public class TopicMapWordBuilder {
 

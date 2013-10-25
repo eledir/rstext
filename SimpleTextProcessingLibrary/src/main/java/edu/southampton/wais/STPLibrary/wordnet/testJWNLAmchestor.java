@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import edu.southampton.wais.utility.TimeMeasureUtility;
+import edu.southampton.wais.utility.general.TimeMeasureUtility;
 
 
 import net.sf.extjwnl.JWNL;

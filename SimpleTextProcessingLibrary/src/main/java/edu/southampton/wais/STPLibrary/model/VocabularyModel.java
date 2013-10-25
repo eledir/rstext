@@ -14,7 +14,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import edu.southampton.wais.STPLibrary.collection.CollectionDocumentModelByWord;
-import edu.southampton.wais.STPLibrary.utility.MathUtility;
 
 
 public class VocabularyModel implements Iterable<Entry<String,  VocabularyMeasure>>{

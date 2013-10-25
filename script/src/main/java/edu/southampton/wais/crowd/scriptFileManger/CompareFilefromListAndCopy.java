@@ -12,7 +12,7 @@ import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.general.Logger;
 
 
 

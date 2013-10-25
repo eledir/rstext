@@ -31,11 +31,11 @@ import edu.southampton.wais.STPLibrary.nlp.OpenNLPTextSentenceProcessor;
 import edu.southampton.wais.STPLibrary.paramater.Parameter;
 import edu.southampton.wais.STPLibrary.processor.StanfordAnnotationProcessor;
 import edu.southampton.wais.STPLibrary.stanfordWrapper.StanfordCoreNLPService;
-import edu.southampton.wais.STPLibrary.utility.IOFileUtility;
 import edu.southampton.wais.STPLibrary.utility.IOUtility4STPLibrary;
 import edu.southampton.wais.STPLibrary.utility.TableDependacyFilter;
-import edu.southampton.wais.utility.Logger;
-import edu.southampton.wais.utility.UtilitySearialization;
+import edu.southampton.wais.utility.general.IOFileUtility;
+import edu.southampton.wais.utility.general.Logger;
+import edu.southampton.wais.utility.general.UtilitySearialization;
 
 public class SearchSuperSense {
 
@@ -168,13 +168,26 @@ public class SearchSuperSense {
 					Table<String, String, String> tableDepeDep = model
 							.getTableDepDep();
 
-					lXYZYNounGov.addAll(TableDependacyFilter.fileterXYZYNoun(tableDepeGovern));
+					
+					
+					Logger.logFiner(TableDependacyFilter.fileterXYZYNoun(tableDepeGovern).toString());
+					
+					
+					Logger.logFiner(TableDependacyFilter.fileterXYZYNoun(tableDepeDep).toString());
+					
+					
+					Logger.logFiner(TableDependacyFilter.fileterXYZYVerb(tableDepeGovern).toString());
+					
+					
+					Logger.logFiner(TableDependacyFilter.fileterXYZYVerb(tableDepeDep).toString());
+					
+					//lXYZYNounGov.addAll(TableDependacyFilter.fileterXYZYNoun(tableDepeGovern));
 
-					lXYZZNounDep.addAll(TableDependacyFilter.fileterXYZYNoun(tableDepeDep));
+					//lXYZZNounDep.addAll(TableDependacyFilter.fileterXYZYNoun(tableDepeDep));
 
-					lXYZYVerbGov.addAll(TableDependacyFilter.fileterXYZYVerb(tableDepeGovern));
+					//lXYZYVerbGov.addAll(TableDependacyFilter.fileterXYZYVerb(tableDepeGovern));
 
-					lXYZZVerbDep.addAll(TableDependacyFilter.fileterXYZYVerb(tableDepeDep));
+					//lXYZZVerbDep.addAll(TableDependacyFilter.fileterXYZYVerb(tableDepeDep));
 
 				}
 
@@ -191,7 +204,7 @@ public class SearchSuperSense {
 			
 
 			
-			File fs1 = new File(basefolderOut + File.separator
+			/*File fs1 = new File(basefolderOut + File.separator
 					+ "lXYYNounGov.txt");
 
 			FileUtils.writeLines(fs1, lXYZYNounGov);
@@ -215,7 +228,7 @@ public class SearchSuperSense {
 					+ "lXYZZVerbDep.txt");
 
 			FileUtils.writeLines(fs4, lXYZZVerbDep);
-			
+		*/	
 			  stopwatch.stop(); // optional
 
 			   long minute = stopwatch.elapsedTime(TimeUnit.MINUTES);

@@ -1,6 +1,5 @@
 package edu.southampton.wais.religiousSentiment;
 
-import edu.southampton.wais.utility.UtilitySearialization;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,11 +20,11 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import edu.southampton.wais.STPLibrary.dataStructure.IntegerSingleNode;
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.sentiment.PolaritySuperSense2;
 import edu.southampton.wais.STPLibrary.sentiment.SentimentComputing;
-import edu.southampton.wais.utility.UtilitySearialization;
+import edu.southampton.wais.utility.general.UtilitySearialization;
+
 import java.io.*;
 public class VectorComputation {
 
@@ -100,9 +99,6 @@ public class VectorComputation {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JWNLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

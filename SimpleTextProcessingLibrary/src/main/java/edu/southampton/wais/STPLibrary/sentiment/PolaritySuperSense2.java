@@ -14,10 +14,10 @@ import com.google.common.collect.Table;
 
 import net.sf.extjwnl.JWNLException;
 import net.sf.extjwnl.dictionary.Dictionary;
-import edu.southampton.wais.STPLibrary.dataStructure.IntegerSingleNode;
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.utility.TableDependacyFilter;
 import edu.southampton.wais.STPLibrary.wordnet.WordnetSuperSenseRetrival;
+import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
 
 public class PolaritySuperSense2 {
 

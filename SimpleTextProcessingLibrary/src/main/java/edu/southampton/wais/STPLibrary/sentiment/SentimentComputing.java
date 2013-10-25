@@ -15,7 +15,7 @@ import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
 
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.general.Logger;
 
 
 

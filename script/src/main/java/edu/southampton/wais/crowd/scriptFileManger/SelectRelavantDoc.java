@@ -54,7 +54,7 @@ public class SelectRelavantDoc {
 		
 		for(TextFile item: collectionTextFile){
 			
-			List<String> listString=SentenceModelUtility.getWordFromString(item.getBody());
+			List<String> listString=SentenceModelUtility.getWordFromString(item.getBody(), null);
 			
 			
 			boolean ckeck=false;
