@@ -7,14 +7,14 @@
 
 
 #folder for collection input and output
-basefolderIN=/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/good/
-#basefolderIN=/Users/antoniopenta/Documents/workspaceReligionSentiment/iestremedata/allFileProva
-#basefolderOut=/Users/antoniopenta/Documents/workspaceReligionSentiment/iestremedata/allSentence
-basefolderOut=/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/allSentenceGood/
+#basefolderIN=/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/good/
+basefolderIN=/Users/antoniopenta/Dropbox/dati/sentimentIdea/manifesto/good/
+basefolderOut=/Users/antoniopenta/Dropbox/dati/sentimentIdea/manifesto/allSentenceGood/
+#basefolderOut=/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/allSentenceGood/
 
 #folder for nlp models
-#nlpFolder=/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata
-nlpFolder=/home/antoniodesktop/Documents/data/nlpdata
+nlpFolder=/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata
+#nlpFolder=/home/antoniodesktop/Documents/data/nlpdata
 
 #nlp variables
 
