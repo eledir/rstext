@@ -21,17 +21,17 @@ import cc.mallet.topics.tui.TopicTrainer;
 
 import edu.southampton.wais.STPLibrary.collection.CollectionDocumentByTopic;
 import edu.southampton.wais.STPLibrary.collection.CollectionTextFile;
-import edu.southampton.wais.STPLibrary.dataStructure.DoubleSingleNode;
-import edu.southampton.wais.STPLibrary.dataStructure.DoubleStringListNode;
-import edu.southampton.wais.STPLibrary.dataStructure.DoubleStringNode;
 import edu.southampton.wais.STPLibrary.file.TextFile;
 import edu.southampton.wais.STPLibrary.model.DocumentModelByTopic;
-import edu.southampton.wais.STPLibrary.utility.IOFileUtility;
 import edu.southampton.wais.STPLibrary.utility.IOUtility4STPLibrary;
 
 import org.apache.commons.io.FileUtils;
 
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.datastructure.DoubleSingleNode;
+import edu.southampton.wais.utility.datastructure.DoubleStringListNode;
+import edu.southampton.wais.utility.datastructure.DoubleStringNode;
+import edu.southampton.wais.utility.general.IOFileUtility;
+import edu.southampton.wais.utility.general.Logger;
 
 import gnu.trove.TPrimitiveHash;
 

@@ -34,7 +34,7 @@ import edu.southampton.wais.STPLibrary.file.TextFile;
 import edu.southampton.wais.STPLibrary.file.TxtFile;
 import org.apache.commons.io.FileUtils;
 
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.general.Logger;
 
 public class TopicExstraction {
 public static void main(String args[]) throws FileNotFoundException, IOException{

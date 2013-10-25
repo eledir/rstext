@@ -19,11 +19,11 @@ import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.nlp.OpenNLPTextSentenceProcessor;
 import edu.southampton.wais.STPLibrary.paramater.Parameter;
 import edu.southampton.wais.STPLibrary.stanfordWrapper.StanfordCoreNLPService;
-import edu.southampton.wais.STPLibrary.utility.IOFileUtility;
 import edu.southampton.wais.STPLibrary.utility.IOUtility4STPLibrary;
 import edu.southampton.wais.STPLibrary.utility.SentenceModelUtility;
-import edu.southampton.wais.utility.Logger;
-import edu.southampton.wais.utility.UtilitySearialization;
+import edu.southampton.wais.utility.general.IOFileUtility;
+import edu.southampton.wais.utility.general.Logger;
+import edu.southampton.wais.utility.general.UtilitySearialization;
 
 public class ExtractSentence {
 

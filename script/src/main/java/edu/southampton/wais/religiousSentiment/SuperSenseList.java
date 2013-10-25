@@ -24,10 +24,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
-import edu.southampton.wais.STPLibrary.dataStructure.IntegerSingleNode;
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.wordnet.WordnetSuperSenseRetrival;
-import edu.southampton.wais.utility.UtilitySearialization;
+import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
+import edu.southampton.wais.utility.general.UtilitySearialization;
 
 public class SuperSenseList {
 

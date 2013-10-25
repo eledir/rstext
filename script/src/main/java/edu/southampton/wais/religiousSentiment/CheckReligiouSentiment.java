@@ -23,10 +23,10 @@ import edu.southampton.wais.STPLibrary.sentiment.PolaritySuperSense;
 import edu.southampton.wais.STPLibrary.sentiment.PolaritySuperSense2;
 import edu.southampton.wais.STPLibrary.sentiment.SentimentComputing;
 import edu.southampton.wais.STPLibrary.stanfordWrapper.StanfordCoreNLPService;
-import edu.southampton.wais.STPLibrary.utility.IOFileUtility;
 import edu.southampton.wais.STPLibrary.utility.SentenceModelUtility;
-import edu.southampton.wais.utility.Logger;
-import edu.southampton.wais.utility.UtilitySearialization;
+import edu.southampton.wais.utility.general.IOFileUtility;
+import edu.southampton.wais.utility.general.Logger;
+import edu.southampton.wais.utility.general.UtilitySearialization;
 
 public class CheckReligiouSentiment {
 
@@ -37,10 +37,10 @@ public class CheckReligiouSentiment {
 		// TODO Auto-generated method stub
 
 		
-String dir = "/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata";
+        String dir = "/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata";
 
 		
-		dir="/home/antoniodesktop/Documents/data/nlpdata";
+		//dir="/home/antoniodesktop/Documents/data/nlpdata";
 
 		Pattern patternSentValidation = Pattern.compile("[a-zA-Z\\-]+");
 

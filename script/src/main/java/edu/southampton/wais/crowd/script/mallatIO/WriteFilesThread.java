@@ -8,7 +8,7 @@ import org.apache.commons.io.FileUtils;
 
 import edu.southampton.wais.STPLibrary.collection.CollectionTextFile;
 import edu.southampton.wais.STPLibrary.file.TextFile;
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.general.Logger;
 
 
 public class WriteFilesThread implements Runnable {

@@ -28,7 +28,7 @@ import edu.southampton.wais.STPLibrary.paramater.Parameter;
 import edu.southampton.wais.STPLibrary.processor.SentenceTokenizerProcessor;
 import edu.southampton.wais.STPLibrary.processor.StanfordAnnotationProcessor;
 import edu.southampton.wais.STPLibrary.utility.IOUtility4STPLibrary;
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.general.Logger;
 
 
 public class ExstractSentence4Crowd {

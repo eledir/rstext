@@ -15,10 +15,11 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import edu.southampton.wais.STPLibrary.dataStructure.IntegerSingleNode;
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.sentiment.SentimentComputing;
-import edu.southampton.wais.utility.UtilitySearialization;
+import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
+import edu.southampton.wais.utility.general.UtilitySearialization;
+
 import java.io.*;
 public class SentimentList {
 
@@ -34,7 +35,10 @@ public class SentimentList {
 		File fpositive = new File(dir + File.separator + "opinion/positive.txt");
 
 		try {
+			
+			
 			List<String> listPositive = FileUtils.readLines(fpositive);
+			
 			List<String> listNegative = FileUtils.readLines(fnegative);
 
 			SentimentComputing sentiment = SentimentComputing

@@ -29,8 +29,6 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.rits.cloning.Cloner;
 
-import edu.southampton.wais.STPLibrary.dataStructure.DoubleStringNode;
-import edu.southampton.wais.STPLibrary.dataStructure.IntegerSingleNode;
 import edu.southampton.wais.STPLibrary.model.AnnotatedWord;
 
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
@@ -39,6 +37,8 @@ import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
 import edu.southampton.wais.STPLibrary.nlp.RegularExpressionUtility;
 import edu.southampton.wais.STPLibrary.nlp.StringProcessor;
 import edu.southampton.wais.STPLibrary.paramater.Parameter;
+import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
+import edu.southampton.wais.utility.general.Logger;
 
 public class SentenceModelUtility {
 
@@ -120,6 +120,17 @@ public class SentenceModelUtility {
 			}
 			
 		}
+	}
+
+
+	public static List<String> getWordFromString(String gloss,
+			HashSet<String> stopList) {
+		// TODO Auto-generated method stub
+		
+		Logger.logSevere("getWordFromString not implemented");
+		
+		
+		return null;
 	}
 
 }

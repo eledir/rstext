@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.general.Logger;
 
 
 

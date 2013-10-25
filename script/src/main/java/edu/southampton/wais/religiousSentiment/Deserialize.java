@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import edu.southampton.wais.STPLibrary.model.DocumentModelBySentence;
-import edu.southampton.wais.utility.UtilitySearialization;
+import edu.southampton.wais.utility.general.UtilitySearialization;
 
 public class Deserialize {
 

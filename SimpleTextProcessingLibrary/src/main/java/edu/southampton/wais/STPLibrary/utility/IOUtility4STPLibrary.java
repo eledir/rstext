@@ -1,8 +1,12 @@
 package edu.southampton.wais.STPLibrary.utility;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collection;
@@ -20,6 +24,7 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import edu.southampton.wais.STPLibrary.collection.CollectionTextFile;
 import edu.southampton.wais.STPLibrary.collection.CollectionDocumentModelByWord;
+import edu.southampton.wais.STPLibrary.dataStructure.AnnotationObject;
 import edu.southampton.wais.STPLibrary.file.DocFile;
 import edu.southampton.wais.STPLibrary.file.PdfFile;
 import edu.southampton.wais.STPLibrary.file.Reference;
@@ -29,7 +34,7 @@ import edu.southampton.wais.STPLibrary.model.DocumentModelByWord;
 import edu.southampton.wais.STPLibrary.model.VocabularyMeasure;
 import edu.southampton.wais.STPLibrary.model.VocabularyModel;
 import edu.southampton.wais.STPLibrary.model.WordFeatures;
-import edu.southampton.wais.utility.Logger;
+import edu.southampton.wais.utility.general.Logger;
 
 
 
@@ -494,6 +499,127 @@ File item=iterator.next();
 }
 
 
+ 
+ public static void save(File f, AnnotationObject annotationObject) {
+		// TODO Auto-generated method stub
+
+		
+		ObjectOutputStream writer=null;
+		try {
+			writer = new ObjectOutputStream(new FileOutputStream(f));
+			
+			
+			writer.writeObject(annotationObject);
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		finally{
+			
+			if(writer!=null){
+				
+				try {
+					writer.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+			}
+			
+		}
+		
+		
+		
+	}
+
+ 
+ public static void writeListTextFileIntoDirClassInfo(
+			File dir, List<TextFile> files) {
+
+		int index=0;   
+			for(TextFile item : files){
+			
+			
+				String name=item.getReference().toString().split("\\.")[0]+"_"+item.getClas()+".txt";
+				
+			        
+				    File  file= new File(dir+File.separator+name);
+		               
+				    
+				    try {
+						FileUtils.writeStringToFile(file, item.getBody());
+					
+				    
+					    int a=index++ % 10;
+						if (a==1)
+					        System.gc();
+
+				    
+				    } catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+			}	
+	}
+
+ 
+
+	public static AnnotationObject  readAnnotationObject(File f) {
+		// TODO Auto-generated method stub
+
+		
+		ObjectInputStream reader=null;
+		AnnotationObject objet=null;
+		try {
+			reader = new ObjectInputStream(new FileInputStream(f));
+			
+		   objet=(AnnotationObject) reader.readObject();
+			
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		finally{
+			
+			if(reader!=null){
+				
+				try {
+					reader.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+			}
+			
+		}
+		
+		return objet;
+		
+	}
+ 
+ 
+ 
  
  public static void main(String args[]){
 	 

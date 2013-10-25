@@ -4,8 +4,8 @@ package edu.southampton.wais.STPLibrary.wsd;
 
 import java.io.Serializable;
 
-import edu.southampton.wais.STPLibrary.dataStructure.ListStringNode;
 import edu.southampton.wais.STPLibrary.wordnet.ExendedSynset;
+import edu.southampton.wais.utility.datastructure.ListStringNode;
 
 
 

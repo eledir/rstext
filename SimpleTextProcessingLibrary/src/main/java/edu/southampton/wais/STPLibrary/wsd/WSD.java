@@ -17,10 +17,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import edu.southampton.wais.STPLibrary.dataStructure.ListStringNode;
-import edu.southampton.wais.STPLibrary.utility.IOFileUtility;
 import edu.southampton.wais.STPLibrary.utility.SyntacticDistanceUtility;
 import edu.southampton.wais.STPLibrary.wordnet.ExendedSynset;
+import edu.southampton.wais.utility.datastructure.ListStringNode;
+import edu.southampton.wais.utility.general.IOFileUtility;
 
 import net.sf.extjwnl.JWNL;
 import net.sf.extjwnl.data.IndexWord;

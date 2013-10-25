@@ -173,6 +173,9 @@ public class TableDependacyFilter {
 		table.put(2, "a", "2a");
 		table.put(2, "b", "2b");
 
+		
+		System.out.println(table);
+		
 		System.out.println(table.columnKeySet());
 		for (String k : table.columnKeySet())
 

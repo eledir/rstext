@@ -21,8 +21,8 @@ import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Table;
 
-import edu.southampton.wais.STPLibrary.dataStructure.DoubleStringNode;
-import edu.southampton.wais.STPLibrary.dataStructure.IntegerSingleNode;
+import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
+
 
 public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 

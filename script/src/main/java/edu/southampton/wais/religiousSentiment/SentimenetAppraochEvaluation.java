@@ -12,7 +12,6 @@ import org.apache.commons.math.stat.descriptive.SummaryStatistics;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-import edu.southampton.wais.STPLibrary.dataStructure.IntegerSingleNode;
 import edu.southampton.wais.STPLibrary.sentiment.SentimentComputing;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;

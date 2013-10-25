@@ -13,7 +13,7 @@ import com.google.common.collect.Multimap;
 
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
-import edu.southampton.wais.utility.UtilitySearialization;
+import edu.southampton.wais.utility.general.UtilitySearialization;
 
 public class CreateMapEntity {
 
