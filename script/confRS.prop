@@ -10,7 +10,7 @@
 basefolderIN=/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/good/
 #basefolderIN=/Users/antoniopenta/Documents/workspaceReligionSentiment/iestremedata/allFileProva
 #basefolderOut=/Users/antoniopenta/Documents/workspaceReligionSentiment/iestremedata/allSentence
-basefolderOut=/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/allSentenceGood/
+basefolderOut=/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/allSentence/
 
 #folder for nlp models
 #nlpFolder=/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata

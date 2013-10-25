@@ -131,6 +131,9 @@ public class ExtractSentence {
 
 					try {
 
+						
+						
+						
 						services.buildAnnotation4Sentence(sm);
 
 					} catch (Exception e) {
