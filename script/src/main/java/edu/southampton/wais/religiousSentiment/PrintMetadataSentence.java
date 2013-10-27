@@ -29,10 +29,20 @@ public class PrintMetadataSentence {
 
 	public static void main(String[] args) {
 
-		String dirIn = "/Users/antoniopenta/Dropbox/dati/sentimentIdea/manifesto/allSentenceGood/";
+		String dirInMac = "/Users/antoniopenta/Dropbox/dati/sentimentIdea/manifesto/allSentenceGood/";
 		
-		String dirOut="/Users/antoniopenta/Dropbox/dati/sentimentIdea/manifesto/goodAnalysis/";
+		String dirOutMac="/Users/antoniopenta/Dropbox/dati/sentimentIdea/manifesto/goodAnalysis/";
 
+		
+		String dirInLinux = "/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/allSentenceGood/";
+		
+		String dirOutLinux="/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/goodAnalysis/";
+
+		String dirIn=dirInLinux;
+		
+		String dirOut=dirOutLinux;
+		
+		
 		File f = new File("config/file_properties.xml");
 
 		FileInputStream fileImFileInputStream;
@@ -62,6 +72,9 @@ public class PrintMetadataSentence {
 		Multiset<String> multisetVerb = HashMultiset.create();
 		Multiset<String> multisetAdj = HashMultiset.create();
 
+		
+		Multiset<String> multisetDep = HashMultiset.create();
+		
 		Multiset<String> multisetEntity = HashMultiset.create();
 
 		Multimap<String, String> multimapEntity = ArrayListMultimap.create();
@@ -73,6 +86,12 @@ public class PrintMetadataSentence {
 				SentenceModel sm = (SentenceModel) UtilitySearialization
 						.deserialiseObject(iterator1.next());
 
+
+				
+				multisetDep.addAll(sm.getGraph().edgeSet());
+				
+				
+				
 				buildSuperSenseList(sm, multisetSuperSense,
 						multisetSuperSenseNull, multimapSuperSense);
 
@@ -89,6 +108,10 @@ public class PrintMetadataSentence {
 		}
 
 		try {
+			
+			
+			
+			PrintUtility.printOrderingMultiSet(new File(dirOut+File.separator+"multisetDep.txt"), multisetDep, ":");
 			
 			
 			

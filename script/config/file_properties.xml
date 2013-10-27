@@ -43,7 +43,9 @@
                 <!--<param name="encoding" value="UTF-8"/>-->
             </param>
             <!--<param name="cache_use_count" value="true"/>-->
-            <param name="dictionary_path" value="/Applications/wordnet/dict/"/>
+            <!--param name="dictionary_path" value="/Applications/wordnet/dict/"/-->
+        <param name="dictionary_path" value="/home/antoniodesktop/Documents/data/wordnet/dict/"/>
+        
         </param>
     </dictionary>
     <resource class="PrincetonResource"/>

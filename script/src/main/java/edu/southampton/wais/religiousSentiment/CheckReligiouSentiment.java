@@ -40,7 +40,7 @@ public class CheckReligiouSentiment {
         String dir = "/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata";
 
 		
-		//dir="/home/antoniodesktop/Documents/data/nlpdata";
+		dir="/home/antoniodesktop/Documents/data/nlpdata";
 
 		Pattern patternSentValidation = Pattern.compile("[a-zA-Z\\-]+");
 

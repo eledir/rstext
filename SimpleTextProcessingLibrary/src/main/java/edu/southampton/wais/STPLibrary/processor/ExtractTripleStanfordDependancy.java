@@ -14,6 +14,10 @@ import com.google.common.collect.Sets;
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.model.TripleModel;
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
+import edu.southampton.wais.STPLibrary.stanfordRule.Rule;
+import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule;
+import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule1;
+import edu.southampton.wais.utility.general.Logger;
 public class ExtractTripleStanfordDependancy {
 
 
@@ -30,7 +34,7 @@ public class ExtractTripleStanfordDependancy {
 	
 	
 	
-	public static List<TripleModel> extract(SentenceModel sm){
+	/*public static List<TripleModel> extract(SentenceModel sm){
 		
 		
 		DirectedGraph<String, String> g=sm.getGraph();
@@ -50,18 +54,18 @@ public class ExtractTripleStanfordDependancy {
 			for(String v2: nounVertex){
 				
 				
-				System.out.println("v1 "+ v1);
-				System.out.println("v2 "+ v2);
+				Logger.logFiner("v1 "+ v1);
+				Logger.logFiner("v2 "+ v2);
 				
 				
 				Set<String> amongEdge=g.getAllEdges(v1, v2);
 				
-				System.out.println("edge "+ amongEdge);
+				Logger.logFiner("edge "+ amongEdge);
 				
 				
 				Set<String> verb=filterVerbXY(amongEdge,g);
 				
-				System.out.println("edge filter "+ verb);
+				Logger.logFiner("edge filter "+ verb);
 				
 				
 				if(verb.size()==1){
@@ -80,7 +84,127 @@ public class ExtractTripleStanfordDependancy {
 		
 		return triples;
 		
+	}*/
+	
+	
+	public static List<TripleModel> extract(SentenceModel sm,Rule r){
+		
+		
+         DirectedGraph<String, String> g=sm.getGraph();
+		
+		
+		Set<String> setVertex=g.vertexSet();
+		
+		
+		Set<String> setVerbVertex=filterVerbVertex(setVertex);
+		
+		List<TripleModel> triples=Lists.newArrayList();
+		
+		
+		for(String vertex:setVerbVertex){
+			
+			String[] itemSplit = vertex.split("-");
+			
+			if(r.exstract(vertex,g,new TripleModel(sm, itemSplit[0]))){
+				 
+				 triples.add(r.getTriple());
+			 }
+			
+			
+		}
+		
+		return triples;
+		
 	}
+	
+	
+/*public static List<TripleModel> extract(SentenceModel sm){
+		
+	
+	    Rule rule1= new TripleRule1();
+	
+	
+	
+		
+		DirectedGraph<String, String> g=sm.getGraph();
+		
+		
+		Set<String> setVertex=g.vertexSet();
+		
+		
+		Set<String> setVerbVertex=filterVerbVertex(setVertex);
+		
+		List<TripleModel> triples=Lists.newArrayList();
+		
+		
+		for(String vertex:setVerbVertex){
+			
+			
+		Set<String> setEdge=g.edgesOf(vertex);
+			
+		
+		 if(rule1.exstract(setEdge, new TripleModel(sm, vertex))){
+			 
+			 triples.add(rule1.getTriple());
+		 }
+		
+		 
+		
+		 
+		 
+		 
+			
+		}
+		
+		
+		for(String v1: nounVertex){
+			
+			for(String v2: nounVertex){
+				
+				
+				Logger.logFiner("v1 "+ v1);
+				Logger.logFiner("v2 "+ v2);
+				
+				
+				Set<String> amongEdge=g.getAllEdges(v1, v2);
+				
+				Logger.logFiner("edge "+ amongEdge);
+				
+				
+				Set<String> verb=filterVerbXY(amongEdge,g);
+				
+				Logger.logFiner("edge filter "+ verb);
+				
+				
+				if(verb.size()==1){
+					
+					
+					
+					triples.add(new TripleModel(sm, v1, v2, verb.iterator().next()));
+					
+					
+				}
+				
+				
+			}
+		}
+		
+		
+		return triples;
+		
+	}*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -138,6 +262,36 @@ public class ExtractTripleStanfordDependancy {
 		    	try {
 				
 		    		return POSTagStanford.isNoun(ps[1]) ? true: false;
+				
+		    	} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return false;
+				}
+		    }
+		});
+		
+		
+		return filtered;
+		
+	}
+	
+	
+	
+	
+	
+private static Set<String> filterVerbVertex(Set<String> vertex){
+		
+		
+		Set<String> filtered = Sets.filter(vertex, new Predicate<String>() {
+		    @Override
+		    public boolean apply(String p) {
+		        
+		    	String [] ps=p.split("-");
+		    	
+		    	try {
+				
+		    		return POSTagStanford.isVerb(ps[1]) ? true: false;
 				
 		    	} catch (Exception e) {
 					// TODO Auto-generated catch block

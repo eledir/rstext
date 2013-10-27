@@ -27,9 +27,13 @@ import edu.southampton.wais.STPLibrary.model.TripleModel;
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
 import edu.southampton.wais.STPLibrary.nlp.StringProcessor;
 import edu.southampton.wais.STPLibrary.processor.ExtractTripleStanfordDependancy;
+import edu.southampton.wais.STPLibrary.stanfordRule.Rule;
 import edu.southampton.wais.STPLibrary.stanfordRule.RuleObject;
 import edu.southampton.wais.STPLibrary.stanfordRule.RuleSubject;
 import edu.southampton.wais.STPLibrary.stanfordRule.RuleVerb;
+import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule1;
+import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule3;
+import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule5;
 import edu.southampton.wais.STPLibrary.utility.SentenceModelUtility;
 import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
 import edu.southampton.wais.utility.general.IOFileUtility;
@@ -61,6 +65,9 @@ import edu.stanford.nlp.pipeline.PTBTokenizerAnnotator;
 import edu.stanford.nlp.pipeline.ParserAnnotator;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.pipeline.WordsToSentencesAnnotator;
+import edu.stanford.nlp.semgraph.SemanticGraph;
+import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation;
+import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import edu.stanford.nlp.util.ArrayCoreMap;
 import edu.stanford.nlp.util.CoreMap;
@@ -83,15 +90,15 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.DocumentPreprocessor;
 import edu.stanford.nlp.process.PTBTokenizer;
-import edu.stanford.nlp.objectbank.TokenizerFactory;
+
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
-import edu.stanford.nlp.trees.semgraph.SemanticGraph;
-import edu.stanford.nlp.trees.semgraph.SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation;
-import edu.stanford.nlp.trees.semgraph.SemanticGraphEdge;
-import edu.stanford.nlp.trees.semgraph.SemanticGraphFormatter;
 
 public class StanfordCoreNLPService {
 
+	
+	
+	private static final String relativePathModel="coreNlp-3.2.0"+File.separator+"models";
+	
 	private StanfordCoreNLP pipeline;
 
 	private AbstractSequenceClassifier<CoreLabel> classifier;
@@ -104,34 +111,45 @@ public class StanfordCoreNLPService {
 
 	}
 
+	
+	
+	
 	/**
 	 * 
 	 * 
 	 * @param args
 	 */
 
+	
+	
+	
+	
 	public static StanfordCoreNLPService StanfordCoreNLPService(String dir) {
 
 		Properties props = new Properties();
 
 		props.put("annotators", "tokenize, ssplit, pos, lemma, parse");
 
-		props.put("parse.model", dir + File.separator
-				+ "englishPCFG.caseless.ser.gz");
+		props.put("parse.model", dir + File.separator+relativePathModel+File.separator
+				+ "englishPCFG.ser.gz");
 
-		props.put("pos.model", dir + File.separator
-				+ "english-left3words-distsim.tagger");
+		props.put("pos.model", dir + File.separator+relativePathModel+File.separator
+				+ "english-bidirectional-distsim.tagger");
 
 		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
 		AbstractSequenceClassifier<CoreLabel> classifier = CRFClassifier
-				.getClassifierNoExceptions(dir + File.separator
-						+ "english.muc.7class.distsim.crf.ser.gz");
+				.getClassifierNoExceptions(dir + File.separator+relativePathModel+File.separator
+						+ "english.all.3class.distsim.crf.ser.gz");
 
 		return new StanfordCoreNLPService(pipeline, classifier);
 
 	}
 
+	
+	
+	
+	
 	public void buildAnnotation4Sentence(SentenceModel sm) throws Exception {
 
 		// create an empty Annotation just with the given text
@@ -174,7 +192,10 @@ public class StanfordCoreNLPService {
 			SemanticGraph dependencies = sentence
 					.get(CollapsedCCProcessedDependenciesAnnotation.class);
 
-			for (SemanticGraphEdge edge : dependencies.edgeIterable()) {
+			
+			
+			
+			for (SemanticGraphEdge edge :dependencies.edgeIterable() ) {
 
 				/*
 				 * System.out.println(edge);
@@ -282,7 +303,9 @@ public class StanfordCoreNLPService {
 		
 		tex="Bell, based in Los Angeles, makes and distributes electronic, computer and building products";
 		
-		tex="It can expand each surah as a coherent discourse, arranging surahs into pairs, and establishing seven major surah divisions - the entire Quran thus emerges as a well-connected and systematic book";
+		//tex="It can expand each surah as a coherent discourse, arranging surahs into pairs, and establishing seven major surah divisions - the entire Quran thus emerges as a well-connected and systematic book";
+		
+		//tex="To accept the idea of pluralism means that you do not care much about religion";
 		
 //		try {
 //	    tex=FileUtils.readFileToString(new File("prova.txt"));
@@ -292,10 +315,12 @@ public class StanfordCoreNLPService {
 //		}
 		
 		
+		tex="I saw the man you love";
+		
 		String dir = "/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata";
 
 		
-		//dir="/home/antoniodesktop/Documents/data/nlpdata";
+		dir="/home/antoniodesktop/Documents/data/nlpdata";
 
 		Pattern patternSentValidation = Pattern.compile("[a-zA-Z\\-]+");
 
@@ -370,10 +395,14 @@ public class StanfordCoreNLPService {
 
 			
 			
+			Rule rule5= new TripleRule3();
 			
-			//List<TripleModel>triple=ExtractTripleStanfordDependancy.extract(sm);
 			
-			//System.out.println(triple);
+			List<TripleModel>triple=ExtractTripleStanfordDependancy.extract(sm,rule5);
+			
+			
+			
+			System.out.println(triple);
 
 
 			

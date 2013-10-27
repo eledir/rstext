@@ -35,6 +35,17 @@ public class TripleModel implements Serializable {
 
 	}
 
+	
+	
+	public TripleModel(SentenceModel context, String verb) {
+		super();
+		this.verb = verb;
+		
+		this.context = context;
+
+	}
+	
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -58,6 +69,40 @@ public class TripleModel implements Serializable {
 	public double getPolarity() {
 		return polarity;
 	}
+
+	
+	
+	
+	
+	public void setContext(SentenceModel context) {
+		this.context = context;
+	}
+
+
+
+	public void setSubj(String subj) {
+		this.subj = subj;
+	}
+
+
+
+	public void setVerb(String verb) {
+		this.verb = verb;
+	}
+
+
+
+	public void setObjt(String objt) {
+		this.objt = objt;
+	}
+
+
+
+	public void setPolarity(double polarity) {
+		this.polarity = polarity;
+	}
+
+
 
 	@Override
 	public String toString() {

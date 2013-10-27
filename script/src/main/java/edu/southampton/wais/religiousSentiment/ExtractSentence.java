@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -17,6 +18,7 @@ import edu.southampton.wais.STPLibrary.collection.CollectionTextFile;
 import edu.southampton.wais.STPLibrary.model.DocumentModelBySentence;
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.nlp.OpenNLPTextSentenceProcessor;
+import edu.southampton.wais.STPLibrary.nlp.StringProcessor;
 import edu.southampton.wais.STPLibrary.paramater.Parameter;
 import edu.southampton.wais.STPLibrary.stanfordWrapper.StanfordCoreNLPService;
 import edu.southampton.wais.STPLibrary.utility.IOUtility4STPLibrary;
@@ -127,12 +129,24 @@ public class ExtractSentence {
 					
 					String sentence=doc.getSentence(i);
 
+					
+					StringProcessor processor= new StringProcessor();
+					
+					
+					List<String>tokens=processor.cleanSentence(sentence, parameter.patternSentValidation);
+					
+					
+					
+					if(tokens.size()<Parameter.maxNumTokenSentence){
+					
+					
 					SentenceModel sm = new SentenceModel(sentence);
 
 					try {
 
 						
 						
+						//Logger.logSevere(sm.getBody());
 						
 						services.buildAnnotation4Sentence(sm);
 
@@ -152,7 +166,7 @@ public class ExtractSentence {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
+					}
 				}
 				
 				 

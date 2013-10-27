@@ -37,7 +37,9 @@ public class Parameter {
 	
 	this.filePathSentenceModelOpenNlp=dirConf+File.separator+"en-sent.bin";
 	//"nlp/data";
-		
+	
+
+	
 	}
 	
 	public String dirConf;

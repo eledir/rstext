@@ -3,11 +3,13 @@ package edu.southampton.wais.utility.general;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.HashMultiset;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -125,10 +127,13 @@ public class PrintUtility {
 			
 			
 		   listNode=GuavaUtility.orderingIntegerSingleNodeByValue(listNode);
+		   
+		   
+		   Set<IntegerSingleNode> set = ImmutableSet.copyOf(listNode);
 
 		   List<String> listToWriteValue= Lists.newArrayList();    
 
-		   for(IntegerSingleNode node:listNode){
+		   for(IntegerSingleNode node :set){
 
 			   listToWriteValue.add(node.name +sepFre+ node.values);
 

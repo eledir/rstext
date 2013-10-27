@@ -6,15 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
-import javax.swing.JFrame;
 
-import org.apache.lucene.analysis.WordlistLoader;
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.Graph;
-import org.jgrapht.ext.JGraphModelAdapter;
-import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.graph.ListenableDirectedGraph;
-import org.jgraph.JGraph;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ListMultimap;
@@ -22,15 +14,21 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Table;
 
 import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
+import edu.stanford.nlp.graph.DirectedMultiGraph;
 
 
 public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private String body;
 
 	ListMultimap<String, Integer> posNormMultiMap;
 
-	DirectedGraph<String, String> graph;
+	DirectedMultiGraph<String, String> graph;
 	
 	HashMap<Integer, Boolean> isValidWord;
 
@@ -104,7 +102,7 @@ public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 
 		
 		
-		graph=new DefaultDirectedGraph<String, String>(String.class);
+		graph=new DirectedMultiGraph<String, String>();
 		
 		tableDepGovern=HashBasedTable.create();
 		
@@ -131,7 +129,7 @@ public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 		this.graph.addVertex(v1);
 		this.graph.addVertex(v2);
 		
-		this.graph.addEdge(v1, v2, edge);
+		this.graph.add(v1, v2, edge);
 		
 		
 	};
@@ -302,14 +300,14 @@ public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 
 
 
-	public DirectedGraph<String, String> getGraph() {
+	public DirectedMultiGraph<String, String> getGraph() {
 		return graph;
 	}
 
 
 
 
-	public void setGraph(DirectedGraph<String, String> graph) {
+	public void setGraph(DirectedMultiGraph<String, String> graph) {
 		this.graph = graph;
 	}
 
