@@ -5,13 +5,11 @@ import java.util.Set;
 
 
 
-
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
 
+public class TripleRule11 extends Rule {
 
-public class TripleRule3 extends Rule {
-
-	private enum Triple3_XYZ_XNoun_ZNoun {
+	private enum Triple11_XYZ_XNoun_ZVerb {
 
 		SUB {
 			public String toString() {
@@ -21,12 +19,12 @@ public class TripleRule3 extends Rule {
 
 		OBJ {
 			public String toString() {
-				return "rcmod";
+				return "comp";
 			}
 		},
 
 	};
-	
+
 
 
 	/**
@@ -37,7 +35,7 @@ public class TripleRule3 extends Rule {
 
 	}
 
-	public TripleRule3() {
+	public TripleRule11() {
 		super();
 	}
 
@@ -45,33 +43,27 @@ public class TripleRule3 extends Rule {
 	protected void extractSubj(Set<String> set) {
 		// TODO Auto-generated method stub
 
-       Set<String> setVertex=g.getAllVertices();
-		
-		
-		for(String item :setVertex){
-			
-			    
-			List<String>edges=g.getEdges(verb, item);
-			
-			
-			if(edges.contains(Triple3_XYZ_XNoun_ZNoun.SUB.toString())){
-				
-				
+		Set<String> setVertex = g.getAllVertices();
+
+		for (String item : setVertex) {
+
+			List<String> edges = g.getEdges(verb, item);
+
+			if (edges.contains(Triple11_XYZ_XNoun_ZVerb.SUB.toString())) {
+
 				String[] itemSplit = item.split("-");
 
 				if (POSTagStanford.isNoun(itemSplit[1])) {
 
 					set.add(item);
-					
-				} 					
-				
-				
-				
+
+				}
+
 			}
-			
-			
-			
+
 		}
+
+	
 
 	}
 
@@ -79,36 +71,30 @@ public class TripleRule3 extends Rule {
 	protected void extractObJ(Set<String> set) {
 		// TODO Auto-generated method stub
 
-        Set<String> setVertex=g.getAllVertices();
-		
-		
-		for(String item :setVertex){
-			
-			    
-			List<String>edges=g.getEdges(item, verb);
-			
-			
-			if(edges.contains(Triple3_XYZ_XNoun_ZNoun.OBJ.toString())){
-				
-				
+		Set<String> setVertex = g.getAllVertices();
+
+		for (String item : setVertex) {
+
+			List<String> edges = g.getEdges(verb, item);
+
+			if (edges.contains(Triple11_XYZ_XNoun_ZVerb.OBJ.toString())) {
+
 				String[] itemSplit = item.split("-");
 
-				if (POSTagStanford.isNoun(itemSplit[1])||POSTagStanford.isVerb(itemSplit[1])) {
+				if (POSTagStanford.isVerb(itemSplit[1])) {
 
 					set.add(item);
-					
-				} 					
-				
-				
-				
+
+				}
+
 			}
-			
-			
-			
+
 		}
 
 	}
 
 	
+
 	
+
 }

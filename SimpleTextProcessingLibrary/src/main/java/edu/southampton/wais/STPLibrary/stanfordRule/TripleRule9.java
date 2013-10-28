@@ -9,9 +9,9 @@ import java.util.Set;
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
 
 
-public class TripleRule3 extends Rule {
+public class TripleRule9 extends Rule {
 
-	private enum Triple3_XYZ_XNoun_ZNoun {
+	private enum Triple9_XYZ_XNoun_ZNoun_ZAdj {
 
 		SUB {
 			public String toString() {
@@ -21,7 +21,7 @@ public class TripleRule3 extends Rule {
 
 		OBJ {
 			public String toString() {
-				return "rcmod";
+				return "cop";
 			}
 		},
 
@@ -37,7 +37,7 @@ public class TripleRule3 extends Rule {
 
 	}
 
-	public TripleRule3() {
+	public TripleRule9() {
 		super();
 	}
 
@@ -54,7 +54,7 @@ public class TripleRule3 extends Rule {
 			List<String>edges=g.getEdges(verb, item);
 			
 			
-			if(edges.contains(Triple3_XYZ_XNoun_ZNoun.SUB.toString())){
+			if(edges.contains(Triple9_XYZ_XNoun_ZNoun_ZAdj.SUB.toString())){
 				
 				
 				String[] itemSplit = item.split("-");
@@ -88,12 +88,12 @@ public class TripleRule3 extends Rule {
 			List<String>edges=g.getEdges(item, verb);
 			
 			
-			if(edges.contains(Triple3_XYZ_XNoun_ZNoun.OBJ.toString())){
+			if(edges.contains(Triple9_XYZ_XNoun_ZNoun_ZAdj.OBJ.toString())){
 				
 				
 				String[] itemSplit = item.split("-");
 
-				if (POSTagStanford.isNoun(itemSplit[1])||POSTagStanford.isVerb(itemSplit[1])) {
+				if (POSTagStanford.isNoun(itemSplit[1])||POSTagStanford.isAdjective(itemSplit[1])) {
 
 					set.add(item);
 					

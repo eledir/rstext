@@ -3,15 +3,21 @@ package edu.southampton.wais.STPLibrary.stanfordRule;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
 
 
 
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
+import edu.southampton.wais.STPLibrary.utility.DirectedMultigraphUtility;
 
 
-public class TripleRule3 extends Rule {
+public class TripleRule12 extends Rule {
 
-	private enum Triple3_XYZ_XNoun_ZNoun {
+	private enum Sub_Triple12_XYZ_XNoun_ZNoun_ZAdj_Z_Verb {
 
 		SUB {
 			public String toString() {
@@ -19,14 +25,13 @@ public class TripleRule3 extends Rule {
 			}
 		},
 
-		OBJ {
-			public String toString() {
-				return "rcmod";
-			}
-		},
-
 	};
 	
+	
+	
+	private Set<String>Obj_Triple12_XYZ_XNoun_ZNoun_ZADj_Z_Verb=Sets.newHashSet("acomp","dobj","acomp","comp");
+			
+			
 
 
 	/**
@@ -37,7 +42,7 @@ public class TripleRule3 extends Rule {
 
 	}
 
-	public TripleRule3() {
+	public TripleRule12() {
 		super();
 	}
 
@@ -53,11 +58,13 @@ public class TripleRule3 extends Rule {
 			    
 			List<String>edges=g.getEdges(verb, item);
 			
+			if(edges.size()>0){
+			Set<String>candidate=DirectedMultigraphUtility.getTargetVertexGivenEdge(Sub_Triple12_XYZ_XNoun_ZNoun_ZAdj_Z_Verb.SUB.toString(), item, g);
 			
-			if(edges.contains(Triple3_XYZ_XNoun_ZNoun.SUB.toString())){
+			
+			for(String item2:candidate){
 				
-				
-				String[] itemSplit = item.split("-");
+				String[] itemSplit = item2.split("-");
 
 				if (POSTagStanford.isNoun(itemSplit[1])) {
 
@@ -66,7 +73,9 @@ public class TripleRule3 extends Rule {
 				} 					
 				
 				
-				
+			}
+			
+			
 			}
 			
 			
@@ -85,15 +94,17 @@ public class TripleRule3 extends Rule {
 		for(String item :setVertex){
 			
 			    
-			List<String>edges=g.getEdges(item, verb);
+			List<String>edges=g.getEdges(verb, item);
+			
+			Set<String>intS=Sets.intersection(ImmutableSet.copyOf(edges), Obj_Triple12_XYZ_XNoun_ZNoun_ZADj_Z_Verb);
 			
 			
-			if(edges.contains(Triple3_XYZ_XNoun_ZNoun.OBJ.toString())){
+			if(intS.size()>0){
 				
 				
 				String[] itemSplit = item.split("-");
 
-				if (POSTagStanford.isNoun(itemSplit[1])||POSTagStanford.isVerb(itemSplit[1])) {
+				if (POSTagStanford.isNoun(itemSplit[1])||POSTagStanford.isAdjective(itemSplit[1])||POSTagStanford.isVerb(itemSplit[1])) {
 
 					set.add(item);
 					

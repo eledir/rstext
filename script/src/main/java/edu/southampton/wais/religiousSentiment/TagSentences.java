@@ -29,7 +29,6 @@ import edu.southampton.wais.utility.general.Logger;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.TaggedWord;
-import edu.stanford.nlp.objectbank.TokenizerFactory;
 import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.PTBTokenizer;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;

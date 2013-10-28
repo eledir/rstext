@@ -30,9 +30,11 @@ import edu.southampton.wais.STPLibrary.processor.ExtractTripleStanfordDependancy
 import edu.southampton.wais.STPLibrary.stanfordRule.Rule;
 
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule1;
+import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule10;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule2;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule3;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule5;
+import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule9;
 import edu.southampton.wais.STPLibrary.utility.SentenceModelUtility;
 import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
 import edu.southampton.wais.utility.general.IOFileUtility;
@@ -314,12 +316,12 @@ public class StanfordCoreNLPService {
 //		}
 		
 		
-		//tex="I saw the man you love";
+		tex="Jihad remains the life of Islam and the main factor of change";
 		
 		String dir = "/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata";
 
 		
-		dir="/home/antoniodesktop/Documents/data/nlpdata";
+		//dir="/home/antoniodesktop/Documents/data/nlpdata";
 
 		Pattern patternSentValidation = Pattern.compile("[a-zA-Z\\-]+");
 
@@ -395,7 +397,7 @@ public class StanfordCoreNLPService {
 			
 			System.out.println(sm.getGraph());
 			
-			Rule rule5= new TripleRule5();
+			Rule rule5= new TripleRule10();
 			
 			
 			List<TripleModel>triple=ExtractTripleStanfordDependancy.extract(sm,rule5);
