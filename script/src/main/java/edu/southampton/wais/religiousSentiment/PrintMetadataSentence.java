@@ -88,7 +88,7 @@ public class PrintMetadataSentence {
 
 
 				
-				multisetDep.addAll(sm.getGraph().edgeSet());
+				multisetDep.addAll(sm.getGraph().getAllEdges());
 				
 				
 				

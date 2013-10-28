@@ -15,9 +15,7 @@ import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.model.TripleModel;
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
 import edu.southampton.wais.STPLibrary.stanfordRule.Rule;
-import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule;
-import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule1;
-import edu.southampton.wais.utility.general.Logger;
+import edu.stanford.nlp.graph.DirectedMultiGraph;
 public class ExtractTripleStanfordDependancy {
 
 
@@ -90,10 +88,10 @@ public class ExtractTripleStanfordDependancy {
 	public static List<TripleModel> extract(SentenceModel sm,Rule r){
 		
 		
-         DirectedGraph<String, String> g=sm.getGraph();
+         DirectedMultiGraph<String, String> g=sm.getGraph();
 		
 		
-		Set<String> setVertex=g.vertexSet();
+		Set<String> setVertex=g.getAllVertices();
 		
 		
 		Set<String> setVerbVertex=filterVerbVertex(setVertex);
@@ -103,12 +101,7 @@ public class ExtractTripleStanfordDependancy {
 		
 		for(String vertex:setVerbVertex){
 			
-			String[] itemSplit = vertex.split("-");
-			
-			if(r.exstract(vertex,g,new TripleModel(sm, itemSplit[0]))){
-				 
-				 triples.add(r.getTriple());
-			 }
+			r.exstract(sm,vertex,g,triples);
 			
 			
 		}

@@ -28,10 +28,9 @@ import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
 import edu.southampton.wais.STPLibrary.nlp.StringProcessor;
 import edu.southampton.wais.STPLibrary.processor.ExtractTripleStanfordDependancy;
 import edu.southampton.wais.STPLibrary.stanfordRule.Rule;
-import edu.southampton.wais.STPLibrary.stanfordRule.RuleObject;
-import edu.southampton.wais.STPLibrary.stanfordRule.RuleSubject;
-import edu.southampton.wais.STPLibrary.stanfordRule.RuleVerb;
+
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule1;
+import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule2;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule3;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule5;
 import edu.southampton.wais.STPLibrary.utility.SentenceModelUtility;
@@ -305,7 +304,7 @@ public class StanfordCoreNLPService {
 		
 		//tex="It can expand each surah as a coherent discourse, arranging surahs into pairs, and establishing seven major surah divisions - the entire Quran thus emerges as a well-connected and systematic book";
 		
-		//tex="To accept the idea of pluralism means that you do not care much about religion";
+		tex="To accept the idea of pluralism means that you do not care much about religion";
 		
 //		try {
 //	    tex=FileUtils.readFileToString(new File("prova.txt"));
@@ -315,7 +314,7 @@ public class StanfordCoreNLPService {
 //		}
 		
 		
-		tex="I saw the man you love";
+		//tex="I saw the man you love";
 		
 		String dir = "/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata";
 
@@ -394,8 +393,9 @@ public class StanfordCoreNLPService {
 
 
 			
+			System.out.println(sm.getGraph());
 			
-			Rule rule5= new TripleRule3();
+			Rule rule5= new TripleRule5();
 			
 			
 			List<TripleModel>triple=ExtractTripleStanfordDependancy.extract(sm,rule5);

@@ -8,8 +8,8 @@
 
 #folder for collection input and output
 
-basefolderIN=/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/bad/
-basefolderOut=/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/allSentenceBad/
+basefolderIN=/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/good/
+basefolderOut=/home/antoniodesktop/Dropbox/dati/sentimentIdea/manifesto/allSentenceGood/
 
 #basefolderIN=/Users/antoniopenta/Dropbox/dati/sentimentIdea/manifesto/good/
 #basefolderOut=/Users/antoniopenta/Dropbox/dati/sentimentIdea/manifesto/allSentenceGood/

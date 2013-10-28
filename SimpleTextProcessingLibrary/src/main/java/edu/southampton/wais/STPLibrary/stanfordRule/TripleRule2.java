@@ -1,15 +1,16 @@
 package edu.southampton.wais.STPLibrary.stanfordRule;
 
+import java.util.List;
 import java.util.Set;
-
 
 import edu.southampton.wais.STPLibrary.model.TripleModel;
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
+
 import edu.stanford.nlp.graph.DirectedMultiGraph;
 
 public class TripleRule2 extends Rule {
 
-	public enum Triple2_XYZ_XNoun_ZNoun {
+	private enum Triple2_XYZ_XNoun_ZNoun {
 
 		SUB {
 			public String toString() {
@@ -25,7 +26,6 @@ public class TripleRule2 extends Rule {
 
 	};
 
-	
 	/**
 	 * @param args
 	 */
@@ -39,23 +39,25 @@ public class TripleRule2 extends Rule {
 	}
 
 	@Override
-	protected void filterSubj(Set<String> set, DirectedMultiGraph<String, String> g) {
+	protected void extractSubj(Set<String> set) {
 		// TODO Auto-generated method stub
 
-		for (String item : set) {
+		Set<String> setVertex = g.getAllVertices();
 
-			if (item.equals(Triple2_XYZ_XNoun_ZNoun.SUB.toString())) {
+		for (String item : setVertex) {
 
-				String subj = g.getEdgeTarget(item);
+			List<String> edges = g.getEdges(verb, item);
 
-				String[] itemSplit = subj.split("-");
+			if (edges.contains(Triple2_XYZ_XNoun_ZNoun.SUB.toString())) {
+
+				String[] itemSplit = item.split("-");
 
 				if (POSTagStanford.isNoun(itemSplit[1])) {
 
-					this.model.setSubj(subj);
-					this.subj = true;
-					break;
+					set.add(item);
+
 				}
+
 			}
 
 		}
@@ -63,22 +65,23 @@ public class TripleRule2 extends Rule {
 	}
 
 	@Override
-	protected void filterObJ(Set<String> set, DirectedMultiGraph<String, String> g) {
+	protected void extractObJ(Set<String> set) {
 		// TODO Auto-generated method stub
 
-		for (String item : set) {
+		Set<String> setVertex = g.getAllVertices();
 
-			if (item.equals(Triple2_XYZ_XNoun_ZNoun.OBJ.toString())) {
+		for (String item : setVertex) {
 
-				String obj = g.getEdgeTarget(item);
+			List<String> edges = g.getEdges(verb, item);
 
-				String[] itemSplit = obj.split("-");
+			if (edges.contains(Triple2_XYZ_XNoun_ZNoun.OBJ.toString())) {
+
+				String[] itemSplit = item.split("-");
 
 				if (POSTagStanford.isNoun(itemSplit[1])) {
 
-					this.model.setObjt(obj);
-					this.obj = true;
-					break;
+					set.add(item);
+
 				}
 
 			}
@@ -86,9 +89,4 @@ public class TripleRule2 extends Rule {
 		}
 
 	}
-
-	
-
-
-
 }

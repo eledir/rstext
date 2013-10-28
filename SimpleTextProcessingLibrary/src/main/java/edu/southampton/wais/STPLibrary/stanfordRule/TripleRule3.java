@@ -1,15 +1,17 @@
 package edu.southampton.wais.STPLibrary.stanfordRule;
 
+import java.util.List;
 import java.util.Set;
 
-import org.jgrapht.DirectedGraph;
+
 
 
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
 
+
 public class TripleRule3 extends Rule {
 
-	public enum Triple3_XYZ_XNoun_ZNoun {
+	private enum Triple3_XYZ_XNoun_ZNoun {
 
 		SUB {
 			public String toString() {
@@ -40,50 +42,69 @@ public class TripleRule3 extends Rule {
 	}
 
 	@Override
-	protected void filterSubj(Set<String> set, DirectedMultiGraph<String, String> g) {
+	protected void extractSubj(Set<String> set) {
 		// TODO Auto-generated method stub
 
-		for (String item : set) {
-
-			if (item.equals(Triple3_XYZ_XNoun_ZNoun.SUB.toString())) {
-
-				String subj = g.getEdgeTarget(item);
-
-				String[] itemSplit = subj.split("-");
+       Set<String> setVertex=g.getAllVertices();
+		
+		
+		for(String item :setVertex){
+			
+			    
+			List<String>edges=g.getEdges(verb, item);
+			
+			
+			if(edges.contains(Triple3_XYZ_XNoun_ZNoun.SUB.toString())){
+				
+				
+				String[] itemSplit = item.split("-");
 
 				if (POSTagStanford.isNoun(itemSplit[1])) {
 
-					this.model.setSubj(subj);
-					this.subj = true;
-					break;
-				}
+					set.add(item);
+					
+				} 					
+				
+				
+				
 			}
-
+			
+			
+			
 		}
 
 	}
 
 	@Override
-	protected void filterObJ(Set<String> set, DirectedMultiGraph<String, String> g) {
+	protected void extractObJ(Set<String> set) {
 		// TODO Auto-generated method stub
 
-		for (String item : set) {
-
-			if (item.equals(Triple3_XYZ_XNoun_ZNoun.OBJ.toString())) {
-
-				String obj = g.getEdgeSource(item);
-
-				String[] itemSplit = obj.split("-");
+        Set<String> setVertex=g.getAllVertices();
+		
+		
+		for(String item :setVertex){
+			
+			    
+			List<String>edges=g.getEdges(item, verb);
+			
+			
+			if(edges.contains(Triple3_XYZ_XNoun_ZNoun.OBJ.toString())){
+				
+				
+				String[] itemSplit = item.split("-");
 
 				if (POSTagStanford.isNoun(itemSplit[1])) {
 
-					this.model.setObjt(obj);
-					this.obj = true;
-					break;
-				}
-
+					set.add(item);
+					
+				} 					
+				
+				
+				
 			}
-
+			
+			
+			
 		}
 
 	}

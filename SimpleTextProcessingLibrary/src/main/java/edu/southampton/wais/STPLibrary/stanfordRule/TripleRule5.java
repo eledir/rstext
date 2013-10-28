@@ -1,13 +1,19 @@
 package edu.southampton.wais.STPLibrary.stanfordRule;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 
-
+import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.model.TripleModel;
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
-import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule3.Triple3_XYZ_XNoun_ZNoun;
-import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule4.Triple4_XYZ_XNoun_ZAdj;
+
 import edu.southampton.wais.utility.general.Logger;
 import edu.stanford.nlp.graph.DirectedMultiGraph;
 
@@ -20,13 +26,12 @@ public class TripleRule5 extends Rule {
 				return "dobj";
 			}
 		},
-		
+
 		Sub2 {
 			public String toString() {
 				return "prep_of";
 			}
 		},
-		
 
 		Sub3 {
 			public String toString() {
@@ -34,27 +39,24 @@ public class TripleRule5 extends Rule {
 			}
 		},
 
-		
 		Obj1 {
 			public String toString() {
 				return "dobj";
 			}
 		},
-		
+
 		Obj2 {
 			public String toString() {
 				return "prep_of";
 			}
 		},
-		
 
 		Obj3 {
 			public String toString() {
 				return "prep_about";
 			}
 		},
-		
-				
+
 		R1 {
 			public String toString() {
 				return "csubj";
@@ -67,137 +69,182 @@ public class TripleRule5 extends Rule {
 			}
 		},
 
-	};
-
-	@Override
-	protected void filterSubj(Set<String> setEdge,
-			DirectedMultiGraph<String, String> g) {
-		// TODO Auto-generated method stub
-
-		for (String item : setEdge) {
-
-			if (item.equals(Triple5_XYZ_XNoun_ZNoun.R1.toString())) {
-
-				
-				String r1 = g.getEdgeTarget(item);
-		
-				
-				
-				Set<String> edger1 = g.edgesOf(r1);
-
-				boolean go1 = searchSubj(edger1,Triple5_XYZ_XNoun_ZNoun.Sub1.toString());
-				boolean go2 = searchSubj(edger1,Triple5_XYZ_XNoun_ZNoun.Sub2.toString());
-				boolean go3 = searchSubj(edger1,Triple5_XYZ_XNoun_ZNoun.Sub3.toString());
-				
-
-				if (go1 ||go2||go3) {
-					break;
-				}
-
-			}
-		}
-
 	}
 
-	private boolean searchSubj(Set<String> set,String edgeName) {
+	private ArrayListMultimap<String, String> verbsObject;
+	private ArrayList<String> subjList;;
 
-		for (String item : set) {
+	public TripleRule5() {
+		super();
 
-			
-			
-			
-			if (item.equals(edgeName)) {
-
-				String subj = g.getEdgeTarget(item);
-
-				Logger.logFiner(subj);
-				
-				String[] itemSplit = subj.split("-");
-
-				if (POSTagStanford.isNoun(itemSplit[1])) {
-
-					this.model.setSubj(item);
-					this.subj = true;
-					return true;
-				}
-
-			}
-		}
-
-		return false;
 	}
 
 	@Override
-	protected void filterObJ(Set<String> setEdge,
-			DirectedMultiGraph<String, String> g) {
-		// TODO Auto-generated method stub
+	public void exstract(SentenceModel sm, String verb,
+			DirectedMultiGraph<String, String> g, List<TripleModel> listModel) {
 
-		
-		
-		
-		for (String item : setEdge) {
+		verbsObject = ArrayListMultimap.create();
+		subjList = Lists.newArrayList();
 
-			
-			
-			
-			if (item.equals(Triple5_XYZ_XNoun_ZNoun.R2.toString())) {
+		this.verb = verb;
 
-				String r2 = g.getEdgeTarget(item);
-				
-				
-				
-				String newverb=r2.split("-")[0];
-				
-				this.model.setVerb(newverb);
+		this.g = g;
 
-				Set<String> edger2 = g.edgesOf(r2);
+		Set<String> setSub = Sets.newHashSet();
 
-				boolean go1 = searchObj(edger2,Triple5_XYZ_XNoun_ZNoun.Obj1.toString());
-				boolean go2 = searchObj(edger2,Triple5_XYZ_XNoun_ZNoun.Obj2.toString());
-				boolean go3 = searchObj(edger2,Triple5_XYZ_XNoun_ZNoun.Obj3.toString());
+		Set<String> setObj = Sets.newHashSet();
 
-		
-				if (go1||go2||go3) {
-					break;
+		this.extractObJ(setObj);
+
+		this.extractSubj(setSub);
+
+		for (String subKey : subjList) {
+
+			for (String verbKey : verbsObject.keySet()) {
+
+				Collection<String> listObj = verbsObject.get(verbKey);
+
+				for (String objKey : listObj) {
+
+					listModel.add(new TripleModel(sm, subKey, verbKey, objKey));
+
 				}
 
 			}
+
 		}
 
 	}
-		
-		
-		
-		
-		
-	private boolean searchObj(Set<String> set,String edgeName) {
+
+	@Override
+	protected void extractSubj(Set<String> set) {
 		// TODO Auto-generated method stub
-		for (String item : set) {
 
-			if (item.equals(edgeName)) {
+		Set<String> setVertex = g.getAllVertices();
 
-				String obj = g.getEdgeTarget(item);
+		List<String> verbs = Lists.newArrayList();
 
-				String[] itemSplit = obj.split("-");
+		for (String item : setVertex) {
 
-				if (POSTagStanford.isNoun(itemSplit[1])) {
+			List<String> edges = g.getEdges(verb, item);
 
-					this.model.setObjt(item);
-					this.obj = true;
-					return true;
+			if (edges.contains(Triple5_XYZ_XNoun_ZNoun.R2.toString())) {
+
+				String[] itemSplit = item.split("-");
+
+				if (POSTagStanford.isVerb(itemSplit[1])) {
+
+					verbs.add(item);
+
 				}
 
 			}
+
 		}
-	return false;
-	
+
+		for (String verb : verbs) {
+
+			for (String vertex : setVertex) {
+
+				List<String> edges = g.getEdges(verb, vertex);
+
+				if (edges.contains(Triple5_XYZ_XNoun_ZNoun.Sub1.toString())) {
+
+					String[] itemSplit = vertex.split("-");
+
+					if (POSTagStanford.isNoun(itemSplit[1])) {
+
+						verbsObject.put(verb, vertex);
+					}
+
+				} else if (edges.contains(Triple5_XYZ_XNoun_ZNoun.Sub2
+						.toString())) {
+
+					String[] itemSplit = vertex.split("-");
+
+					if (POSTagStanford.isNoun(itemSplit[1])) {
+
+						verbsObject.put(verb, vertex);
+					}
+				}
+
+				else if (edges
+						.contains(Triple5_XYZ_XNoun_ZNoun.Sub3.toString())) {
+
+					String[] itemSplit = vertex.split("-");
+
+					if (POSTagStanford.isNoun(itemSplit[1])) {
+
+						verbsObject.put(verb, vertex);
+					}
+				}
+			}
+
+		}
+
 	}
 
+	@Override
+	protected void extractObJ(Set<String> set) {
+		// TODO Auto-generated method stub
 
+		Set<String> setVertex = g.getAllVertices();
 
+		List<String> verbs = Lists.newArrayList();
 
+		for (String item : setVertex) {
 
-	
+			List<String> edges = g.getEdges(verb, item);
+
+			if (edges.contains(Triple5_XYZ_XNoun_ZNoun.R1.toString())) {
+
+				String[] itemSplit = item.split("-");
+
+				if (POSTagStanford.isVerb(itemSplit[1])) {
+
+					verbs.add(item);
+
+				}
+
+			}
+
+		}
+
+		for (String verb : verbs) {
+
+			for (String vertex : setVertex) {
+
+				List<String> edges = g.getEdges(verb, vertex);
+
+				if (edges.contains(Triple5_XYZ_XNoun_ZNoun.Obj1.toString())) {
+					
+					String[] itemSplit = vertex.split("-");
+
+					if (POSTagStanford.isNoun(itemSplit[1])) {
+						subjList.add(vertex);
+					}
+				} else if (edges.contains(Triple5_XYZ_XNoun_ZNoun.Obj2
+						.toString())) {
+					String[] itemSplit = vertex.split("-");
+
+					if (POSTagStanford.isNoun(itemSplit[1])) {
+						subjList.add(vertex);
+					}
+				}
+
+				else if (edges
+						.contains(Triple5_XYZ_XNoun_ZNoun.Obj3.toString())) {
+					String[] itemSplit = vertex.split("-");
+
+					if (POSTagStanford.isNoun(itemSplit[1])) {
+						subjList.add(vertex);
+					}
+				}
+			}
+
+		}
+
+	}
 
 	/**
 	 * @param args

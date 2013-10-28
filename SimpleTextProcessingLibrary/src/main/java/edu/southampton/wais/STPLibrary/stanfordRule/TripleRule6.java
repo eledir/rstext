@@ -7,9 +7,9 @@ import java.util.Set;
 
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
 
-public class TripleRule4 extends Rule {
+public class TripleRule6 extends Rule {
 
-	private enum Triple4_XYZ_XNoun_ZAdj {
+	private enum Triple6_XYZ_XNoun_ZVerb {
 
 		SUB {
 			public String toString() {
@@ -19,7 +19,7 @@ public class TripleRule4 extends Rule {
 
 		OBJ {
 			public String toString() {
-				return "acomp";
+				return "xcomp";
 			}
 		},
 
@@ -35,7 +35,7 @@ public class TripleRule4 extends Rule {
 
 	}
 
-	public TripleRule4() {
+	public TripleRule6() {
 		super();
 	}
 
@@ -49,7 +49,7 @@ public class TripleRule4 extends Rule {
 
 			List<String> edges = g.getEdges(verb, item);
 
-			if (edges.contains(Triple4_XYZ_XNoun_ZAdj.SUB.toString())) {
+			if (edges.contains(Triple6_XYZ_XNoun_ZVerb.SUB.toString())) {
 
 				String[] itemSplit = item.split("-");
 
@@ -77,11 +77,11 @@ public class TripleRule4 extends Rule {
 
 			List<String> edges = g.getEdges(verb, item);
 
-			if (edges.contains(Triple4_XYZ_XNoun_ZAdj.OBJ.toString())) {
+			if (edges.contains(Triple6_XYZ_XNoun_ZVerb.OBJ.toString())) {
 
 				String[] itemSplit = item.split("-");
 
-				if (POSTagStanford.isAdjective(itemSplit[1])) {
+				if (POSTagStanford.isVerb(itemSplit[1])) {
 
 					set.add(item);
 

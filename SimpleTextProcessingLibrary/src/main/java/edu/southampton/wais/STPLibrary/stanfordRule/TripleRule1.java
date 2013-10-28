@@ -1,5 +1,6 @@
 package edu.southampton.wais.STPLibrary.stanfordRule;
 
+import java.util.List;
 import java.util.Set;
 
 import edu.stanford.nlp.graph.DirectedMultiGraph;
@@ -39,56 +40,78 @@ public class TripleRule1 extends Rule {
 	}
 
 	@Override
-	protected void filterSubj(Set<String> set, DirectedMultiGraph<String, String> g) {
+	protected void extractSubj(Set<String>setSubj) {
 		// TODO Auto-generated method stub
 
-		for (String item : set) {
 
-			if (item.equals(Triple1_XYZ_XNoun_ZNoun.SUB.toString())) {
-
-				String subj = g.getEdgeTarget(item);
-
-				String[] itemSplit = subj.split("-");
+		Set<String> setVertex=g.getAllVertices();
+		
+		
+		for(String item :setVertex){
+			
+			    
+			List<String>edges=g.getEdges(verb, item);
+			
+			
+			if(edges.contains(Triple1_XYZ_XNoun_ZNoun.SUB.toString())){
+				
+				
+				String[] itemSplit = item.split("-");
 
 				if (POSTagStanford.isNoun(itemSplit[1])) {
 
-					super.model.setSubj(subj);
-					super.subj = true;
-					break;
-				}
+					setSubj.add(item);
+					
+				} 					
+				
+				
+				
 			}
-
+			
+			
+			
 		}
-
+		
+		
+		
 	}
+
 
 	@Override
-	protected void filterObJ(Set<String> set, DirectedMultiGraph<String, String> g) {
+	protected void extractObJ(Set<String>setObj) {
 		// TODO Auto-generated method stub
 
-		for (String item : set) {
 
-			if (item.equals(Triple1_XYZ_XNoun_ZNoun.OBJ.toString())) {
+Set<String> setVertex=g.getAllVertices();
 
-				String obj = g.getEdgeTarget(item);
 
-				String[] itemSplit = obj.split("-");
+for(String item :setVertex){
+	
+	    
+	List<String>edges=g.getEdges(verb, item);
+	
+	
+	if(edges.contains(Triple1_XYZ_XNoun_ZNoun.OBJ.toString())){
+		
+		
+		String[] itemSplit = item.split("-");
 
-				if (POSTagStanford.isNoun(itemSplit[1])) {
+		if (POSTagStanford.isNoun(itemSplit[1])) {
 
-					this.model.setObjt(obj);
-					this.obj = true;
-					break;
-				}
-
-			}
-
-		}
+			setObj.add(item);
+			
+		} 					
+		
+		
+		
+	}
+	
+	
+	
+}
 
 	}
-
 	
+}	
 
-	
 
-}
