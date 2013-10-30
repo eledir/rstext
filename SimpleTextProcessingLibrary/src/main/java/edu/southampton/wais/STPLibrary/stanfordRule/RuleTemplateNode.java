@@ -17,6 +17,29 @@ public class RuleTemplateNode {
 	
 	private boolean posNormalized=true;
 
+	public static enum RuleTemplateNodeEnum{ Noun("n"),Verb("v"),Adj("a"),
+		SubjRole("subj"),VerbRole("verb"),ObjRole("obj");
+		
+	
+    private final String name;       
+
+    private RuleTemplateNodeEnum(String s) {
+        name = s;
+    }
+
+    public boolean equalsName(String otherName){
+        return (otherName == null)? false:name.equals(otherName);
+    }
+
+    public String toString(){
+       return name;
+    }
+	
+    
+    
+    
+	};
+	
 	
 	public RuleTemplateNode(int id) {
 		super();

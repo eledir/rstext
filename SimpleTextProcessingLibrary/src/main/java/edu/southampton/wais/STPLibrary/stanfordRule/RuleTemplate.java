@@ -1,7 +1,17 @@
 package edu.southampton.wais.STPLibrary.stanfordRule;
 
+import java.util.List;
+import java.util.Map;
+
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
+
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
+
+import edu.southampton.wais.STPLibrary.stanfordRule.RuleTemplateNode.RuleTemplateNodeEnum;
 
 public class RuleTemplate {
 
@@ -12,8 +22,12 @@ public class RuleTemplate {
 	
 	private int numberNode;
 	
-	
 	private int updateNumberNode;
+
+
+	
+	private Multimap<String,Integer> mapRole;
+	
 	
 	DirectedGraph<RuleTemplateNode, RuleTemplateEdge> graph;
 
@@ -26,8 +40,29 @@ public class RuleTemplate {
 		
 		graph=new DefaultDirectedGraph<RuleTemplateNode, RuleTemplateEdge>(RuleTemplateEdge.class);
 		
+		mapRole=ArrayListMultimap.create();
+		
+		
 	}
 
+	
+	
+	
+	public void addRole(String role,Integer ...ruleTemplateNodeId){
+		
+		this.mapRole.putAll(role, Lists.newArrayList(ruleTemplateNodeId));
+		
+	}
+	
+	
+	
+ public void addRole(String role,List<Integer> ruleTemplateNodeIdList){
+		
+		this.mapRole.putAll(role, ruleTemplateNodeIdList);
+		
+	}
+	
+	
 	
 	public void addRuleNode(RuleTemplateNode node) throws RuleException{
 		
@@ -110,6 +145,10 @@ public class RuleTemplate {
 	    		
 	    	
 	    }
+	    
+	    
+	   s.append("Role in Rule :\n").append(this.mapRole.toString()).append("\n");
+	    
 	    s.append('}');
 	    return s.toString();
 	  }
@@ -140,6 +179,85 @@ public class RuleTemplate {
 			return false;
 		return true;
 	}
+
+
+		
+		
+		
+	public boolean searchRuleTemplateNodeById(int id,  RuleTemplateNode nodeOut){
+		
+		
+		for(RuleTemplateNode node : this.graph.vertexSet()){
+			
+			 if(node.getId()==id){
+				 
+				 nodeOut=node;
+				 return true;
+				 
+			 }
+			
+			
+		}
+		
+		return false;
+		
+	}
+
+
+
+
+	public boolean isRuleTemplateNode(Integer id) {
+		
+		
+		for(RuleTemplateNode node : this.graph.vertexSet()){
+			
+			 if(node.getId()==id){
+				 
+				 
+				 return true;
+				 
+			 }
+			
+			
+		}
+		
+		return false;
+		
+		
+	}
+
+
+
+
+	public List<Integer> getSubjID() {
+		// TODO Auto-generated method stub
+		
+		return Lists.newArrayList(this.mapRole.get(RuleTemplateNodeEnum.SubjRole.name()));
+		
+		
+	}
+
+
+
+
+	public List<Integer> getObjID() {
+		// TODO Auto-generated method stub
+
+		return Lists.newArrayList(this.mapRole.get(RuleTemplateNodeEnum.ObjRole.name()));
+		
+	
+	}
+
+
+
+
+	public List<Integer> getVerbID() {
+		// TODO Auto-generated method stub
+		return Lists.newArrayList(this.mapRole.get(RuleTemplateNodeEnum.VerbRole.name()));
+		
+	}	
+		
+	
 
 	
 	

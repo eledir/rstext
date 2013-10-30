@@ -11,6 +11,30 @@ public class RuleTemplateEdge {
 	
 	private List<String>depType;
 
+public static enum EdgeType{ Every("*");
+		
+	
+    private final String name;       
+
+    private EdgeType(String s) {
+        name = s;
+    }
+
+    public boolean equalsName(String otherName){
+        return (otherName == null)? false:name.equals(otherName);
+    }
+
+    public String toString(){
+       return name;
+    }
+	
+    
+    
+    
+	};
+	
+	
+	
 	
 	public RuleTemplateEdge(List<String> depType) {
 		super();
