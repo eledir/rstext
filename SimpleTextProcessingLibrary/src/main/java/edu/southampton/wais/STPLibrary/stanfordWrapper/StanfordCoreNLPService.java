@@ -34,6 +34,7 @@ import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule10;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule2;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule3;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule5;
+import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule8;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule9;
 import edu.southampton.wais.STPLibrary.utility.SentenceModelUtility;
 import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
@@ -316,12 +317,16 @@ public class StanfordCoreNLPService {
 //		}
 		
 		
-		tex="Jihad remains the life of Islam and the main factor of change";
+		//tex="Jihad remains the life of Islam and the main factor of change";
+		
+		
+		tex="What she said makes sense";
+		
 		
 		String dir = "/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata";
 
 		
-		//dir="/home/antoniodesktop/Documents/data/nlpdata";
+		dir="/home/antoniodesktop/Documents/data/nlpdata";
 
 		Pattern patternSentValidation = Pattern.compile("[a-zA-Z\\-]+");
 
@@ -397,7 +402,7 @@ public class StanfordCoreNLPService {
 			
 			System.out.println(sm.getGraph());
 			
-			Rule rule5= new TripleRule10();
+			Rule rule5= new TripleRule8();
 			
 			
 			List<TripleModel>triple=ExtractTripleStanfordDependancy.extract(sm,rule5);
