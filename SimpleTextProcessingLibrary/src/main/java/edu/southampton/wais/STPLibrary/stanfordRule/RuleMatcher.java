@@ -8,6 +8,7 @@ import opennlp.tools.parser.PosSampleStream;
 
 import org.jgrapht.DirectedGraph;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Collections2;
@@ -61,6 +62,13 @@ public class RuleMatcher {
 
 		// filter the map based on the edge constraint
 
+		Multimap<Integer, String> mapFilterNodeCopy=ArrayListMultimap.create(mapFilterNode);
+
+		
+		
+		
+		Logger.logFiner(mapFilterNode.toString());
+		
 		for (Integer id1 : mapFilterNode.keySet()) {
 
 			for (Integer id2 : mapFilterNode.keySet()) {
@@ -72,13 +80,17 @@ public class RuleMatcher {
 					if (gTemplate.containsEdge(new RuleTemplateNode(id1),
 							new RuleTemplateNode(id2))) {
 
+						
+						Logger.logFiner(String.format("Compare constraint rule node %s and %s",id1,id2));
+						
+						
 						Set<String> filteredIstanceNode1 = Sets.newHashSet();
 
 						Set<String> filteredIstanceNode2 = Sets.newHashSet();
 
 						// remove node before updating
-						mapFilterNode.removeAll(id1);
-						mapFilterNode.removeAll(id1);
+						mapFilterNodeCopy.removeAll(id1);
+						mapFilterNodeCopy.removeAll(id1);
 
 						boolean id1_id2_allowed = ckeckEdgeAllowed(gIstance,
 								gTemplate.getEdge(new RuleTemplateNode(id1),
@@ -88,13 +100,19 @@ public class RuleMatcher {
 
 						if (id1_id2_allowed) {
 
-							mapFilterNode.putAll(id1, Sets.intersection(
+							
+							
+							Logger.logFiner(String.format("ID1 %s and ID2 have allowed the following collections %s,  %s",
+									Joiner.on(" ").join(filteredIstanceNode1),Joiner.on(" ").join(filteredIstanceNode2)));
+							
+							
+							mapFilterNodeCopy.putAll(id1, Sets.intersection(
 									filteredIstanceNode1,
-									Sets.newHashSet(mapFilterNode.get(id1))));
+									Sets.newHashSet(mapFilterNodeCopy.get(id1))));
 
-							mapFilterNode.putAll(id2, Sets.intersection(
+							mapFilterNodeCopy.putAll(id2, Sets.intersection(
 									filteredIstanceNode2,
-									Sets.newHashSet(mapFilterNode.get(id2))));
+									Sets.newHashSet(mapFilterNodeCopy.get(id2))));
 
 						}
 
@@ -115,13 +133,13 @@ public class RuleMatcher {
 
 						if (id2_id1_allowed) {
 
-							mapFilterNode.putAll(id1, Sets.intersection(
+							mapFilterNodeCopy.putAll(id1, Sets.intersection(
 									filteredIstanceNode1,
-									Sets.newHashSet(mapFilterNode.get(id1))));
+									Sets.newHashSet(mapFilterNodeCopy.get(id1))));
 
-							mapFilterNode.putAll(id2, Sets.intersection(
+							mapFilterNodeCopy.putAll(id2, Sets.intersection(
 									filteredIstanceNode2,
-									Sets.newHashSet(mapFilterNode.get(id2))));
+									Sets.newHashSet(mapFilterNodeCopy.get(id2))));
 
 						}
 
@@ -138,11 +156,11 @@ public class RuleMatcher {
 
 		// check that all the id have some elements
 
-		boolean matchAllConstrain = checkPresenceElmentInMaps(mapFilterNode);
+		boolean matchAllConstrain = checkPresenceElmentInMaps(mapFilterNodeCopy);
 
 		if (matchAllConstrain) {
 
-			return buildListTripleNode(sm, template, mapFilterNode);
+			return buildListTripleNode(sm, template, mapFilterNodeCopy);
 
 		}
 
@@ -229,15 +247,27 @@ public class RuleMatcher {
 
 				if (gIstance.isEdge(node1, node2)) {
 
+					
+					Logger.logFiner(String.format("There is an edge %s for  %s and %s",gIstance.getEdges(node1, node2),node1,node2));
+					
+					
+					
 					List<String> filteredEdge = Lists.newArrayList(Collections2
 							.filter(gIstance.getEdges(node1, node2),
 									MatcherEdge.match(edge.getDepType())));
 
+					
+					
+					
 					// if the filtered Edge size >0 so the nodes 1 and 2
 					// are allowed
 
 					if (!filteredEdge.isEmpty()) {
 
+						
+						Logger.logFiner(String.format("There is an edge %s alllowed for  %s and %s based on dep %s",gIstance.getEdges(node1, node2),node1,node2,Joiner.on(" ").join(edge.getDepType())));
+						
+						
 						collection1Out.add(node1);
 						collection2Out.add(node2);
 
@@ -301,19 +331,19 @@ public class RuleMatcher {
 				if (POSTagStanford.isAdjective(inputSplit[1])) {
 
 					return type
-							.contains(RuleTemplateNode.RuleTemplateNodeEnum.Adj);
+							.contains(RuleTemplateNode.RuleTemplateNodeEnum.Adj.toString());
 				}
 
 				if (POSTagStanford.isNoun(inputSplit[1])) {
 
 					return type
-							.contains(RuleTemplateNode.RuleTemplateNodeEnum.Noun);
+							.contains(RuleTemplateNode.RuleTemplateNodeEnum.Noun.toString());
 				}
 
 				if (POSTagStanford.isVerb(inputSplit[1])) {
 
 					return type
-							.contains(RuleTemplateNode.RuleTemplateNodeEnum.Verb);
+							.contains(RuleTemplateNode.RuleTemplateNodeEnum.Verb.toString());
 				}
 
 				return false;
@@ -338,11 +368,15 @@ public class RuleMatcher {
 
 			for (String type : edgeTemplate) {
 
-				if (type.equals(RuleTemplateEdge.EdgeType.Every)) {
+				if (type.equals(RuleTemplateEdge.EdgeType.Every.toString())) {
 					return true;
+				
 				} else {
 
-					return input.equals(type) ? true : false;
+					if(input.equals(type)){
+						return true;
+					}
+					
 
 				}
 
