@@ -232,7 +232,7 @@ public class RuleTemplate {
 	public List<Integer> getSubjID() {
 		// TODO Auto-generated method stub
 		
-		return Lists.newArrayList(this.mapRole.get(RuleTemplateNodeEnum.SubjRole.name()));
+		return Lists.newArrayList(this.mapRole.get(RuleTemplateNodeEnum.SubjRole.toString()));
 		
 		
 	}
@@ -243,7 +243,7 @@ public class RuleTemplate {
 	public List<Integer> getObjID() {
 		// TODO Auto-generated method stub
 
-		return Lists.newArrayList(this.mapRole.get(RuleTemplateNodeEnum.ObjRole.name()));
+		return Lists.newArrayList(this.mapRole.get(RuleTemplateNodeEnum.ObjRole.toString()));
 		
 	
 	}
@@ -253,7 +253,7 @@ public class RuleTemplate {
 
 	public List<Integer> getVerbID() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(this.mapRole.get(RuleTemplateNodeEnum.VerbRole.name()));
+		return Lists.newArrayList(this.mapRole.get(RuleTemplateNodeEnum.VerbRole.toString()));
 		
 	}	
 		

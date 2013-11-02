@@ -5,38 +5,12 @@ import java.util.List;
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 
-public class RuleTemplateEdge {
+public class RuleIstanceEdge {
+
+private List<String>depType;
 
 	
-	
-	private List<String>depType;
-
-    public static enum EdgeType{ Every("*");
-		
-	
-    private final String name;       
-
-    private EdgeType(String s) {
-        name = s;
-    }
-
-    public boolean equalsName(String otherName){
-        return (otherName == null)? false:name.equals(otherName);
-    }
-
-    public String toString(){
-       return name;
-    }
-	
-    
-    
-    
-	};
-	
-	
-	
-	
-	public RuleTemplateEdge(List<String> depType) {
+	public RuleIstanceEdge(List<String> depType) {
 		super();
 		this.depType = depType;
 	}
@@ -66,4 +40,13 @@ public class RuleTemplateEdge {
 	
 	
 	
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

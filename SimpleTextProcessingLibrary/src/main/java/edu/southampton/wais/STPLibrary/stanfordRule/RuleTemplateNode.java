@@ -18,8 +18,12 @@ public class RuleTemplateNode {
 	private boolean posNormalized=true;
 
 	public static enum RuleTemplateNodeEnum{ Noun("n"),Verb("v"),Adj("a"),
-		SubjRole("subj"),VerbRole("verb"),ObjRole("obj");
+		SubjRole("subj"),VerbRole("verb"),ObjRole("obj"),Every("*");
 		
+	
+	
+	
+	
 	
     private final String name;       
 

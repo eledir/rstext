@@ -4,11 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-
-import javax.annotation.Nullable;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -18,10 +15,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
-import com.google.common.primitives.Ints;
 
 import edu.southampton.wais.STPLibrary.stanfordRule.RuleTemplateNode.RuleTemplateNodeEnum;
 
@@ -513,6 +508,7 @@ public class RuleParser {
 		// test parser
 
 		try {
+			@SuppressWarnings("unchecked")
 			List<String> ruleDef = FileUtils.readLines(new File(
 					"rules/confRules.txt"));
 
