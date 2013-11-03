@@ -219,8 +219,12 @@ public class ExtractModelsBasedOnStanfordDependancyProcessor {
 							"/Users/antoniopenta/Documents/DatiRicerca/iextreme/collections/trainFiles/KM.txt"));
 
 			textVet.clear();
-			textVet.add("it seduced people and prevented that religion is god");
-
+			//textVet.add("it seduced people and prevented that religion is god");
+			String texSent="To accept the idea of pluralism means that you do not care much about religion";
+			
+			textVet.add(texSent);
+			
+			
 			for (String tex : textVet) {
 
 				List<String> texL = stringProcessor.cleanSentence(tex,
@@ -246,7 +250,7 @@ public class ExtractModelsBasedOnStanfordDependancyProcessor {
 				System.out.println(StringUtils.repeat("_", 10));
 
 				List<String> ruleDef = FileUtils.readLines(new File(
-						"rules/confRules.txt"));
+						"rules/tripleRulesExtraction.rule"));
 
 				RuleParser parser = new RuleParser(ruleDef);
 
