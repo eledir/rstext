@@ -315,6 +315,17 @@ public class RuleParser {
 
 		}
 
+		
+		if(rule.graph.containsEdge(roleNode1, roleNode2)){
+			
+			throw new RuleParserException(
+					"there is already an edge defined for "+roleNode1.getId() +" and " + roleNode2.getId()+
+					" if you would add more dependancies write something like this edge.1->0=dobj,prep_of,prep_about for rule :"
+							+ idRule);
+
+			
+		}
+		
 		// create a edge
 		RuleTemplateEdge edge = new RuleTemplateEdge(
 				Lists.newArrayList(nodeValue));
