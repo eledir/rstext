@@ -12,6 +12,8 @@ import com.google.common.collect.ListMultimap;
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
 import edu.southampton.wais.STPLibrary.nlp.StringProcessor;
+import edu.southampton.wais.STPLibrary.stanfordRule.Rule;
+
 import edu.southampton.wais.STPLibrary.utility.SentenceModelUtility;
 import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
 import edu.southampton.wais.utility.datastructure.SingleNode;
@@ -303,13 +305,16 @@ public class StanfordCoreNLPService {
 //			e1.printStackTrace();
 //		}
 		
-		
+
 		tex="Jihad  change remains the life of Islam and the main factor of change";
+		//tex="Jihad remains the life of Islam and the main factor of change";
+		
+		
 		
 		String dir = "/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata";
 
 		
-		//dir="/home/antoniodesktop/Documents/data/nlpdata";
+		dir="/home/antoniodesktop/Documents/data/nlpdata";
 
 		Pattern patternSentValidation = Pattern.compile("[a-zA-Z\\-]+");
 
@@ -383,6 +388,7 @@ public class StanfordCoreNLPService {
 
 			
 			System.out.println(sm.getGraph());
+			
 			
 			
 
