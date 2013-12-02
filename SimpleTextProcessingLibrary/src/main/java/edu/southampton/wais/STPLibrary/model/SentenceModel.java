@@ -6,18 +6,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
-
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Table;
 
 import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
+import edu.southampton.wais.utility.datastructure.SingleNode;
 import edu.stanford.nlp.graph.DirectedMultiGraph;
 
 
-public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
+public class SentenceModel implements Iterable<SingleNode<Integer,String>>,Serializable {
 
 	/**
 	 * 
@@ -26,9 +27,8 @@ public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 
 	private String body;
 
-	ListMultimap<String, Integer> posNormMultiMap;
-
-	DirectedMultiGraph<String, String> graph;
+	
+	DirectedMultiGraph<SingleNode<Integer,String>, String> graph;
 	
 	HashMap<Integer, Boolean> isValidWord;
 
@@ -42,31 +42,31 @@ public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 
 	HashMap<Integer, String> ner;
 
+	HashMap<Integer, Boolean> negation;
+
+	HashMap<Integer, Boolean> notEnglishWord;
+
 	
+	ListMultimap<String, Integer> posNormMultiMap;
 	ListMultimap<String, Integer> nerMultiMap;
 
-	Stack<IntegerSingleNode> stackadj;
-
-	Stack<IntegerSingleNode> stacknoun;
-
-	Stack<IntegerSingleNode> stackverb;
-
-	Stack<IntegerSingleNode> stackadverb;
-
-	Stack<IntegerSingleNode> stacknegation;
-
-	List<IntegerSingleNode> wordList;
-
-	List<IntegerSingleNode> wordLemmaList;
+	
+	ListMultimap<String, Integer> string2IndexMultimap;
+	
+	HashMap<Integer, String> index2StringMap;
 	
 	
-	Table<String,String,String> tableDepGovern;
+	List<SingleNode<Integer,String>> wordList;
+    List<SingleNode<Integer,String>> wordLemmaList;
 	
 	
-	Table<String,String,String> tableDepDep;
+	Table<String,SingleNode<Integer,String>,SingleNode<Integer,String>> tableDepGovern;
 	
 	
-	Stack<IntegerSingleNode> notEnglishWord;
+	Table<String,SingleNode<Integer,String>,SingleNode<Integer,String>> tableDepDep;
+	
+	
+	
 	
 
 	public SentenceModel(String body) {
@@ -75,46 +75,35 @@ public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 
 		posNormMultiMap = ArrayListMultimap.create();
 
+		isValidWord = Maps.newHashMap();
+		posWord =Maps.newHashMap();
+		posNormalizeWord = Maps.newHashMap();
+		wordCorrected = Maps.newHashMap();
+		lemma = Maps.newHashMap();
+		ner =Maps.newHashMap();
+		notEnglishWord=Maps.newHashMap();
+		negation=Maps.newHashMap();
+	
 		
-		isValidWord = new HashMap<Integer, Boolean>();
-
-		posWord = new HashMap<Integer, String>();
-
-		posNormalizeWord = new HashMap<Integer, String>();
-
-		wordCorrected = new HashMap<Integer, String>();
-
-		lemma = new HashMap<Integer, String>();
-
-		stackadj = new Stack<IntegerSingleNode>();
-		stacknoun = new Stack<IntegerSingleNode>();
-		stackverb = new Stack<IntegerSingleNode>();
-		stackadverb = new Stack<IntegerSingleNode>();
-		stacknegation = new Stack<IntegerSingleNode>();
-
 		wordList = Lists.newArrayList();
-
 		wordLemmaList = Lists.newArrayList();
-
+		
 		nerMultiMap = ArrayListMultimap.create();
-
-		ner = new HashMap<Integer, String>();
-
+	
+		string2IndexMultimap=ArrayListMultimap.create();
+		index2StringMap=Maps.newHashMap();
 		
-		
-		graph=new DirectedMultiGraph<String, String>();
-		
+		graph=new DirectedMultiGraph<SingleNode<Integer,String>, String>();
 		tableDepGovern=HashBasedTable.create();
-		
 		tableDepDep=HashBasedTable.create();
 		
-		notEnglishWord=new Stack<IntegerSingleNode>();
+		
 
 	}
 
 	
 	
-	public void addTuple(String type,String gov,String dep){
+	public void addTuple(String type,SingleNode<Integer,String> gov,SingleNode<Integer,String> dep){
 		
 		this.tableDepGovern.put(type, gov, dep);
 		
@@ -124,7 +113,7 @@ public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 	}
 	
 	
-	public void addNodeGraph(String v1,String v2,String edge){
+	public void addNodeGraph(SingleNode<Integer,String> v1,SingleNode<Integer,String> v2,String edge){
 		
 		this.graph.addVertex(v1);
 		this.graph.addVertex(v2);
@@ -134,6 +123,17 @@ public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 		
 	};
 	
+	
+	
+	public void addIndex2String(int index, String string){
+		this.index2StringMap.put(index,string);
+	}
+	
+	
+	
+	public void addString2Index(String string,int index){
+		this.string2IndexMultimap.put(string, index);
+	}
 	
 	public void addNer(int index, String ner) {
 
@@ -147,36 +147,7 @@ public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 
 	};
 
-	public void addStackAdj(IntegerSingleNode node) {
-
-		this.stackadj.push(node);
-
-	}
-
-	public void addStackVerb(IntegerSingleNode node) {
-
-		this.stackverb.push(node);
-
-	}
-
-	public void addStackNoun(IntegerSingleNode node) {
-
-		this.stacknoun.push(node);
-
-	}
-
-	public void addStackNegation(IntegerSingleNode node) {
-
-		this.stacknegation.push(node);
-
-	}
-
-	public void addStackAdverb(IntegerSingleNode node) {
-
-		this.stackadverb.push(node);
-
-	}
-
+	
 	public void addValidWord(int index, boolean b) {
 
 		this.isValidWord.put(index, b);
@@ -207,17 +178,35 @@ public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 
 	}
 
-	public void addWord(IntegerSingleNode node) {
+
+	public void addNegation(int index, boolean b) {
+
+		this.negation.put(index, b);
+
+	}
+
+	public void addNotEnglishWord(int index, boolean b) {
+
+		this.notEnglishWord.put(index, b);
+
+	}
+
+	
+	
+	public void addWord(SingleNode<Integer,String> node) {
 
 		this.wordList.add(node);
 
 	};
 
-	public void addWordLemma(IntegerSingleNode node) {
+	public void addWordLemma(SingleNode<Integer,String> node) {
 
 		this.wordLemmaList.add(node);
 
 	};
+	
+	
+	
 
 	@Override
 	public String toString() {
@@ -225,7 +214,7 @@ public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 	}
 
 	@Override
-	public Iterator<IntegerSingleNode> iterator() {
+	public Iterator<SingleNode<Integer,String>> iterator() {
 		// TODO Auto-generated method stub
 		return this.wordLemmaList.iterator();
 	}
@@ -269,51 +258,36 @@ public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 		return nerMultiMap;
 	}
 
-	public Stack<IntegerSingleNode> getStackadj() {
-		return stackadj;
-	}
-
-	public Stack<IntegerSingleNode> getStacknoun() {
-		return stacknoun;
-	}
-
-	public Stack<IntegerSingleNode> getStackverb() {
-		return stackverb;
-	}
-
-	public Stack<IntegerSingleNode> getStackadverb() {
-		return stackadverb;
-	}
-
-	public Stack<IntegerSingleNode> getStacknegation() {
-		return stacknegation;
-	}
-
-	public List<IntegerSingleNode> getWordList() {
+	
+	
+	public List<SingleNode<Integer,String>> getWordList() {
 		return wordList;
 	}
 
-	public List<IntegerSingleNode> getWordLemmaList() {
+	public List<SingleNode<Integer,String>> getWordLemmaList() {
 		return wordLemmaList;
 	}
 
 
 
 
-	public DirectedMultiGraph<String, String> getGraph() {
+	public DirectedMultiGraph<SingleNode<Integer,String>, String> getGraph() {
 		return graph;
 	}
 
 
 
 
-	public void setGraph(DirectedMultiGraph<String, String> graph) {
+	public void setGraph(DirectedMultiGraph<SingleNode<Integer,String>, String> graph) {
 		this.graph = graph;
 	}
 
 	
 	
-	
+	public int getNumberToken(){
+		
+		return this.wordList.size();
+	}
 	
 	
 	
@@ -322,22 +296,43 @@ public class SentenceModel implements Iterable<IntegerSingleNode>,Serializable {
 	
 	
 
-	public Table<String, String, String> getTableDepGovern() {
+	public Table<String, SingleNode<Integer,String>,SingleNode<Integer,String>> getTableDepGovern() {
 		return tableDepGovern;
 	}
 
 
 
-	public Table<String, String, String> getTableDepDep() {
+	public Table<String, SingleNode<Integer,String>, SingleNode<Integer,String>> getTableDepDep() {
 		return tableDepDep;
 	}
 
 
 
-	public Stack<IntegerSingleNode> getNotEnglishWord() {
+	public HashMap<Integer, Boolean> getNegation() {
+		return negation;
+	}
+
+
+
+	public HashMap<Integer, Boolean> getNotEnglishWord() {
 		return notEnglishWord;
 	}
 
+
+
+	public ListMultimap<String, Integer> getString2IndexMultimap() {
+		return string2IndexMultimap;
+	}
+
+
+
+	public HashMap<Integer, String> getIndex2StringMap() {
+		return index2StringMap;
+	}
+
+
+
+	
 
 
 	

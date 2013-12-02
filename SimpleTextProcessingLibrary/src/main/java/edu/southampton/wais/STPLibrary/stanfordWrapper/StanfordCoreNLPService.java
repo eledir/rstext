@@ -7,23 +7,27 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ListMultimap;
 
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
 import edu.southampton.wais.STPLibrary.nlp.StringProcessor;
 import edu.southampton.wais.STPLibrary.utility.SentenceModelUtility;
 import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
+import edu.southampton.wais.utility.datastructure.SingleNode;
 import edu.southampton.wais.utility.general.IOFileUtility;
 import edu.southampton.wais.utility.general.Logger;
 import edu.stanford.nlp.ie.AbstractSequenceClassifier;
 import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.ling.CoreAnnotations.IndexAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.PartOfSpeechAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TextAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
 import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.semgraph.SemanticGraph;
@@ -101,28 +105,27 @@ public class StanfordCoreNLPService {
 		// has values with custom types
 		List<CoreMap> sentencesCoreMap = document
 				.get(SentencesAnnotation.class);
+		
+		
+		this.processTags(sentencesCoreMap, sm);
+		this.processNerTag(sentencesCoreMap, sm);
+		this.processDependacies(sentencesCoreMap, sm);
+		
 
-		int index = -1;
-
-		for (List<CoreLabel> lcl : classifier.classify(sm.getBody())) {
-			for (CoreLabel cl : lcl) {
-				index++;
-				
-				String ne = cl.get(CoreAnnotations.AnswerAnnotation.class);
-				
-				
-				Logger.logFiner(index+" "+cl.word()+" "+ne);
-				
-				
-				
-
-				sm.addNer(index, ne);
-
-			}
-		}
-
-		index = -1;
-
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	private void processDependacies(List<CoreMap> sentencesCoreMap, SentenceModel sm){
+		
+		
+		
+		
 		for (CoreMap sentence : sentencesCoreMap) {
 			// traversing the words in the current sentence
 			// a CoreLabel is a CoreMap with additional token-specific methods
@@ -135,104 +138,152 @@ public class StanfordCoreNLPService {
 			
 			for (SemanticGraphEdge edge :dependencies.edgeIterable() ) {
 
-				/*
-				 * System.out.println(edge);
-				 * System.out.println(edge.getGovernor().originalText());
-				 * System.out.println(edge.getDependent().originalText());
-				 */
-
-				sm.addNodeGraph(edge.getGovernor()
-						.toString(), edge.getDependent().toString(),edge.toString());
-
 				
-				sm.addTuple(edge.toString(), edge.getGovernor().toString(), edge.getDependent().toString());
+				
+				SingleNode<Integer,String> gov= new SingleNode<Integer,String>(edge.getGovernor().index(),edge.getGovernor().toString());
+				
+				SingleNode<Integer,String> dep= new SingleNode<Integer,String>(edge.getDependent().index(),edge.getDependent().toString());
+				
+				sm.addNodeGraph(gov,dep,edge.toString());
+				
+				sm.addTuple(edge.toString(), gov, dep);
+				
+								
 				
 			}
 
-			// System.out.println(table);
-
-			// SemanticGraphFormatter formatter= new
-			// SemanticGraphFormatter(5,5,true,true,true,true,true);
-
-			// String s=formatter.formatSemanticGraph(dependencies);
-
-			// System.out.println(s);
-
-			for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
-
+		
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	private  void processNerTag(List<CoreMap> sentencesCoreMap,SentenceModel sm){
+		
+		int index=0;
+		
+		for (List<CoreLabel> lcl : classifier.classify(sm.getBody())) {
+			
+			
+			
+			for (CoreLabel cl : lcl) {
+			
+				
 				index++;
-
-				// this is the text of the token
-				String word = token.get(TextAnnotation.class).toLowerCase();
-				// this is the POS tag of the token
-				String pos = token.get(PartOfSpeechAnnotation.class);
-
-				String lemma = token.get(LemmaAnnotation.class);
-
+				
+				String ne = cl.get(CoreAnnotations.AnswerAnnotation.class);
 				
 				
 				
-				sm.addLemma(index, lemma);
-
-				sm.addPOSWord(index, pos);
-
-				sm.addWord(new IntegerSingleNode(word, index));
-
-				sm.addWordLemma(new IntegerSingleNode(word, index));
-
-				sm.addValidWord(index, true);
+				sm.addNer(index,ne);
 				
 				
 				
-				if (POSTagStanford.isAdjective(pos)) {
+				
+				
 
-					sm.addPOSNormaLized(index, POSTagStanford.ADJ);
-					sm.addStackAdj(new IntegerSingleNode(word, index));
-					sm.addMultiMapPOS(POSTagStanford.ADJ, index);
-				}
-
-				else if (POSTagStanford.isNoun(pos)) {
-
-					sm.addPOSNormaLized(index, POSTagStanford.NOUN);
-					sm.addStackNoun(new IntegerSingleNode(word, index));
-					sm.addMultiMapPOS(POSTagStanford.NOUN, index);
-
-				}
-
-				else if (POSTagStanford.isVerb(pos)) {
-
-					sm.addPOSNormaLized(index, POSTagStanford.VERB);
-					sm.addStackVerb(new IntegerSingleNode(word, index));
-					sm.addMultiMapPOS(POSTagStanford.VERB, index);
-
-				}
-
-				else if (POSTagStanford.isAdverb(pos)) {
-
-					sm.addPOSNormaLized(index, POSTagStanford.ADVERB);
-					sm.addStackAdverb(new IntegerSingleNode(word, index));
-					sm.addMultiMapPOS(POSTagStanford.ADVERB, index);
-
-					if (word.equals("n't") || word.equals("not")) {
-
-						sm.addStackNegation(new IntegerSingleNode("not", index));
-
-					}
-
-				}
-
-				else {
-
-					sm.addPOSNormaLized(index, POSTagStanford.OTHER);
-					sm.addMultiMapPOS(POSTagStanford.OTHER, index);
-
-				}
+				
 
 			}
-
 		}
 
+		
+		
+		
+		
 	}
+	
+	
+	
+	private  void processTags(List<CoreMap> sentencesCoreMap,SentenceModel sm){
+		
+		int index=0;
+		for (CoreMap sentence : sentencesCoreMap) {
+		
+			// traversing the words in the current sentence
+		
+			
+		 for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
+
+			index++;
+			// this is the text of the token
+			String word = token.get(TextAnnotation.class).toLowerCase();
+			// this is the POS tag of the token
+			String pos = token.get(PartOfSpeechAnnotation.class);
+
+			String lemma = token.get(LemmaAnnotation.class);
+
+			
+			
+			
+			
+			
+			
+			
+			
+			sm.addLemma(index, lemma);
+
+			sm.addPOSWord(index, pos);
+
+			sm.addValidWord(index, true);
+
+			
+			sm.addIndex2String(index, word);
+			
+			sm.addString2Index(word, index);
+			
+			
+			
+			if (POSTagStanford.isAdjective(pos)) {
+
+				sm.addPOSNormaLized(index, POSTagStanford.ADJ);
+		
+				sm.addMultiMapPOS(POSTagStanford.ADJ, index);
+			}
+
+			else if (POSTagStanford.isNoun(pos)) {
+
+				sm.addPOSNormaLized(index, POSTagStanford.NOUN);
+				sm.addMultiMapPOS(POSTagStanford.NOUN, index);
+
+			}
+
+			else if (POSTagStanford.isVerb(pos)) {
+
+				sm.addPOSNormaLized(index, POSTagStanford.VERB);
+				sm.addMultiMapPOS(POSTagStanford.VERB, index);
+
+			}
+
+			else if (POSTagStanford.isAdverb(pos)) {
+
+				sm.addPOSNormaLized(index, POSTagStanford.ADVERB);
+				sm.addMultiMapPOS(POSTagStanford.ADVERB, index);
+
+				if (word.equals("n't") || word.equals("not")) {
+
+					sm.addNegation(index, true);
+
+				}
+
+			}
+			
+			else {
+
+				sm.addPOSNormaLized(index, POSTagStanford.OTHER);
+				sm.addMultiMapPOS(POSTagStanford.OTHER, index);
+
+			}
+		 }
+	}
+	
+	}
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -253,7 +304,7 @@ public class StanfordCoreNLPService {
 //		}
 		
 		
-		tex="Jihad remains the life of Islam and the main factor of change";
+		tex="Jihad  change remains the life of Islam and the main factor of change";
 		
 		String dir = "/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata";
 
@@ -294,6 +345,7 @@ public class StanfordCoreNLPService {
 			
             SentenceModelUtility.invalidatedStopListTerm(sm, listStop);
             
+           
             boolean valid=SentenceModelUtility.countMeaningfulTerms(sm, 3);
 			
 
@@ -306,12 +358,6 @@ public class StanfordCoreNLPService {
 			System.out.println(sm.getLemma());
 			System.out.println(sm.getPosNormMultiMap());
 
-			System.out.println(sm.getStackadj());
-			System.out.println(sm.getStackadverb());
-			System.out.println(sm.getStacknegation());
-
-			System.out.println(sm.getStacknoun());
-			System.out.println(sm.getStackverb());
 			System.out.println(sm.getPosWord());
 			System.out.println(sm.getPosNormalizeWord());
 
@@ -327,6 +373,10 @@ public class StanfordCoreNLPService {
 
 			
 			System.out.println(sm.getTableDepGovern());
+			
+			
+			System.out.println(sm.getIndex2StringMap());
+			System.out.println(sm.getString2IndexMultimap());
 			
 			System.out.println(" ---------------");
 

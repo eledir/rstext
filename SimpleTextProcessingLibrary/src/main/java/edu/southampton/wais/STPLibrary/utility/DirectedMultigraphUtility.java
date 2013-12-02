@@ -5,21 +5,22 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
+import edu.southampton.wais.utility.datastructure.SingleNode;
 import edu.stanford.nlp.graph.DirectedMultiGraph;
 
 public class DirectedMultigraphUtility {
 
 	
 	
-	public static Set<String> getTargetVertexGivenEdge(String edge,String source,DirectedMultiGraph<String, String> g ){
+	public static Set<SingleNode<Integer, String>> getTargetVertexGivenEdge(String edge,SingleNode<Integer, String> source,DirectedMultiGraph<SingleNode<Integer, String>, String> g ){
 		
 		
-		Set<String> result=Sets.newHashSet();
+		Set<SingleNode<Integer, String>> result=Sets.newHashSet();
 		
-		Set<String> n=g.getNeighbors(source);
+		Set<SingleNode<Integer, String>> n=g.getNeighbors(source);
 		
 		
-		for(String item:n){
+		for(SingleNode<Integer, String> item:n){
 			
 			
 			List<String> edgeList= g.getEdges(source, item);
@@ -46,15 +47,15 @@ public class DirectedMultigraphUtility {
 	
 	
 	
-public static Set<String> getSourceVertexGivenEdge(String edge,String target,DirectedMultiGraph<String, String> g ){
+public static Set<SingleNode<Integer, String>> getSourceVertexGivenEdge(String edge,SingleNode<Integer, String> target,DirectedMultiGraph<SingleNode<Integer, String>, String> g ){
 		
 		
-		Set<String> result=Sets.newHashSet();
+		Set<SingleNode<Integer, String>> result=Sets.newHashSet();
 		
-		Set<String> n=g.getNeighbors(target);
+		Set<SingleNode<Integer, String>> n=g.getNeighbors(target);
 		
 		
-		for(String item:n){
+		for(SingleNode<Integer, String> item:n){
 			
 			
 			List<String> edgeList= g.getEdges(item, target);

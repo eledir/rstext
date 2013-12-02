@@ -30,7 +30,6 @@ import com.google.common.collect.Lists;
 import com.rits.cloning.Cloner;
 
 import edu.southampton.wais.STPLibrary.model.AnnotatedWord;
-
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.nlp.POSTagLingPipe;
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
@@ -38,6 +37,7 @@ import edu.southampton.wais.STPLibrary.nlp.RegularExpressionUtility;
 import edu.southampton.wais.STPLibrary.nlp.StringProcessor;
 import edu.southampton.wais.STPLibrary.paramater.Parameter;
 import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
+import edu.southampton.wais.utility.datastructure.SingleNode;
 import edu.southampton.wais.utility.general.Logger;
 
 public class SentenceModelUtility {
@@ -45,10 +45,10 @@ public class SentenceModelUtility {
 	public static void invalidatedStopListTerm(SentenceModel smodel,
 			HashSet<String> listsStopWords) {
 
-		for (IntegerSingleNode node : smodel) {
+		for (SingleNode<Integer, String> node : smodel) {
 
 			
-			int index = node.getValues();
+			int index = node.getNumber();
 
 			// the stop list is sepcified in terms of lemma;
 			
@@ -109,13 +109,13 @@ public class SentenceModelUtility {
 		// TODO Auto-generated method stub
 	
 		
-		List<IntegerSingleNode>list=sm.getWordList();
+		List<SingleNode<Integer, String>>list=sm.getWordList();
 		
-		for(IntegerSingleNode node:list){
+		for(SingleNode<Integer, String> node:list){
 			
-			if(node.getName().length()<=len){
+			if(node.getObject().length()<=len){
 				
-				sm.addValidWord(node.values, false);
+				sm.addValidWord(node.getNumber(), false);
 				
 			}
 			

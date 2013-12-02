@@ -1,5 +1,7 @@
 package edu.southampton.wais.STPLibrary.stanfordRule;
 
+import edu.southampton.wais.utility.datastructure.SingleNode;
+
 public class RuleIstanceNode {
 
 	
@@ -9,11 +11,11 @@ public class RuleIstanceNode {
 	
 	private String value;
 	
-	private String token;
+	private SingleNode<Integer,String>token;
 	
 	
 	
-	public RuleIstanceNode(int id, String type,String value,String token) {
+	public RuleIstanceNode(int id, String type,String value,SingleNode<Integer,String> token) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -61,7 +63,7 @@ public class RuleIstanceNode {
 
 
 
-	public String getToken() {
+	public SingleNode<Integer,String> getToken() {
 		return token;
 	}
 

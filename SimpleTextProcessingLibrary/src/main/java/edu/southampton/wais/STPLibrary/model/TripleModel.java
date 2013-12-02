@@ -7,6 +7,9 @@ import java.util.List;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
+import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
+import edu.southampton.wais.utility.datastructure.SingleNode;
+
 public class TripleModel implements Serializable {
 
 	/**
@@ -16,16 +19,16 @@ public class TripleModel implements Serializable {
 
 	SentenceModel context;
 
-	String subj;
+	SingleNode<Integer,String> subj;
 
-	String verb;
+	SingleNode<Integer,String> verb;
 
-	String objt;
+	SingleNode<Integer,String> objt;
 
 	double polarity = -1;
 
-	public TripleModel(SentenceModel context, String subj, String verb,
-			String objt) {
+	public TripleModel(SentenceModel context,SingleNode<Integer,String> subj, SingleNode<Integer,String> verb,
+			SingleNode<Integer,String> objt) {
 		super();
 		this.subj = subj;
 		this.verb = verb;
@@ -37,7 +40,7 @@ public class TripleModel implements Serializable {
 
 	
 	
-	public TripleModel(SentenceModel context, String verb) {
+	public TripleModel(SentenceModel context, SingleNode<Integer,String> verb) {
 		super();
 		this.verb = verb;
 		
@@ -54,15 +57,15 @@ public class TripleModel implements Serializable {
 		return context;
 	}
 
-	public String getSubj() {
+	public SingleNode<Integer,String> getSubj() {
 		return subj;
 	}
 
-	public String getVerb() {
+	public SingleNode<Integer,String> getVerb() {
 		return verb;
 	}
 
-	public String getObjt() {
+	public SingleNode<Integer,String> getObjt() {
 		return objt;
 	}
 
@@ -80,19 +83,19 @@ public class TripleModel implements Serializable {
 
 
 
-	public void setSubj(String subj) {
+	public void setSubj(SingleNode<Integer,String> subj) {
 		this.subj = subj;
 	}
 
 
 
-	public void setVerb(String verb) {
+	public void setVerb(SingleNode<Integer,String> verb) {
 		this.verb = verb;
 	}
 
 
 
-	public void setObjt(String objt) {
+	public void setObjt(SingleNode<Integer,String> objt) {
 		this.objt = objt;
 	}
 
@@ -108,7 +111,7 @@ public class TripleModel implements Serializable {
 	public String toString() {
 		return Objects.toStringHelper(this.getClass())
 				.add("Sentence : ", this.context).add("", "\n")
-				.addValue("<"+this.subj).addValue(this.verb).addValue(this.objt)
+				.addValue("<"+this.subj.getObject()).addValue(this.verb.getObject()).addValue(this.objt.getObject())
 				.add(" polarity ", this.polarity).addValue(" >\n").toString();
 	}
 

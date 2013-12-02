@@ -15,6 +15,7 @@ import com.google.common.collect.Sets;
 
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
 import edu.southampton.wais.STPLibrary.utility.PermutationBuilder;
+import edu.southampton.wais.utility.datastructure.SingleNode;
 import edu.southampton.wais.utility.general.Logger;
 import edu.stanford.nlp.graph.DirectedMultiGraph;
 
@@ -31,7 +32,7 @@ public class CandidateRuleIstanceBuilder {
 	public static List<RuleIstance> buildCandidateRuleIstance(SentenceModel sm,
 			RuleTemplate template) {
 
-		DirectedMultiGraph<String, String> gIstance = sm.getGraph();
+		DirectedMultiGraph<SingleNode<Integer,String>, String> gIstance = sm.getGraph();
 
 		DirectedGraph<RuleTemplateNode, RuleTemplateEdge> gTemplate = template.graph;
 
@@ -41,15 +42,15 @@ public class CandidateRuleIstanceBuilder {
 
 		// get all the nodes of the graph from the sentence
 
-		Set<String> setVertex = gIstance.getAllVertices();
+		Set<SingleNode<Integer,String>> setVertex = gIstance.getAllVertices();
 
-		Multimap<Integer, String> mapFilterNode = ArrayListMultimap.create();
+		Multimap<Integer, SingleNode<Integer,String>> mapFilterNode = ArrayListMultimap.create();
 
 		// filter just the node that match the node constraint
 
 		for (RuleTemplateNode ruleTemplateNode : nodeTemplateSet) {
 
-			Set<String> setVertexFiltered = Sets.filter(setVertex,
+			Set<SingleNode<Integer,String>> setVertexFiltered = Sets.filter(setVertex,
 					Predicate4Rule
 							.filterRuleNodePredicate(ruleTemplateNode));
 
@@ -91,10 +92,12 @@ public class CandidateRuleIstanceBuilder {
 
 				for (int j = 0; j < vet.size(); j++) {
 
-					String token = Lists.newArrayList(mapFilterNode.get(j)).get(
+					SingleNode<Integer,String> token = Lists.newArrayList(mapFilterNode.get(j)).get(
 							(int) vet.get(j));
 
-					String[] nodeSplitted=token.split("-");
+					String tokenString=token.getObject();
+					
+					String[] nodeSplitted=tokenString.split("-");
 					
 					RuleIstanceNode node=new RuleIstanceNode(j, nodeSplitted[1],nodeSplitted[0],token);
 					

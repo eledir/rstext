@@ -9,6 +9,8 @@ import org.jgrapht.graph.DefaultDirectedGraph;
 
 import com.google.common.base.Objects;
 
+import edu.southampton.wais.utility.datastructure.SingleNode;
+
 
 public class RuleIstance {
 
@@ -83,14 +85,14 @@ public RuleIstanceEdge getEdge(
 
 
 
-public String getNodeValueByID(Integer id) throws RuleException {
+public SingleNode<Integer,String> getNodeValueByID(Integer id) throws RuleException {
 	// TODO Auto-generated method stub
 	
 	
 	for(RuleIstanceNode node:this.graph.vertexSet()){
 		
 		  if(node.getId()==id){
-			  return node.getValue();
+			  return node.getToken();
 		  }
 		
 	}

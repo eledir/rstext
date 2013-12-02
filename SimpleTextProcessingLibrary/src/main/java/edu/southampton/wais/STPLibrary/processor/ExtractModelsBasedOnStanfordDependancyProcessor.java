@@ -24,6 +24,7 @@ import edu.southampton.wais.STPLibrary.stanfordRule.RuleParser;
 import edu.southampton.wais.STPLibrary.stanfordRule.RuleTemplate;
 import edu.southampton.wais.STPLibrary.stanfordWrapper.StanfordCoreNLPService;
 import edu.southampton.wais.STPLibrary.utility.SentenceModelUtility;
+import edu.southampton.wais.utility.datastructure.SingleNode;
 import edu.southampton.wais.utility.general.IOFileUtility;
 import edu.southampton.wais.utility.general.Logger;
 
@@ -58,6 +59,10 @@ public class ExtractModelsBasedOnStanfordDependancyProcessor {
 				List<Integer> listIDObj = ruleTemplate.getObjID();
 
 				List<Integer> listIDVerb = ruleTemplate.getVerbID();
+				
+				
+				
+			
 
 				listTripleModel.add(new TripleModel(sm, ruleIstance
 						.getNodeValueByID(listIDSub.get(0)), ruleIstance
@@ -79,43 +84,10 @@ public class ExtractModelsBasedOnStanfordDependancyProcessor {
 
 		for (RuleTemplate ruleTemplate : setRuleTemplate) {
 
-			List<RuleIstance> listRuleIstance = CandidateRuleIstanceBuilder
-					.buildCandidateRuleIstance(sm, ruleTemplate);
-
+			
+			listTripleModel.addAll(extract(sm, ruleTemplate));
 			
 			
-			
-			
-			for (RuleIstance ruleIstance : listRuleIstance) {
-
-				
-				//System.out.println(ruleIstance);
-				
-				boolean b = MatcherRule.matchRuleInstance2RuleTemplate(
-						ruleIstance, ruleTemplate);
-
-				if (b) {
-
-					Logger.logFiner((String.format("the rule %s is activated..",
-							ruleTemplate.getName())));
-
-					Logger.logFiner(ruleTemplate.toString());
-
-					List<Integer> listIDSub = ruleTemplate.getSubjID();
-
-					List<Integer> listIDObj = ruleTemplate.getObjID();
-
-					List<Integer> listIDVerb = ruleTemplate.getVerbID();
-
-					listTripleModel.add(new TripleModel(sm, ruleIstance
-							.getNodeValueByID(listIDSub.get(0)), ruleIstance
-							.getNodeValueByID(listIDVerb.get(0)), ruleIstance
-							.getNodeValueByID(listIDObj.get(0))));
-
-				}
-
-			}
-
 		}
 
 		return listTripleModel;
@@ -131,10 +103,10 @@ public class ExtractModelsBasedOnStanfordDependancyProcessor {
 
 		for (TripleModel model : listModel) {
 
-			Set<String> verbEx = ExtendRuleProcessor.extracVerbByListExtend(
+			Set<SingleNode<Integer,String>> verbEx = ExtendRuleProcessor.extracVerbByListExtend(
 					model, sm.getGraph());
 
-			for (String verb : verbEx) {
+			for (SingleNode<Integer,String> verb : verbEx) {
 				listModelExVerb.add(new TripleModel(sm, model.getSubj(), verb,
 						model.getObjt()));
 			}
@@ -150,10 +122,10 @@ public class ExtractModelsBasedOnStanfordDependancyProcessor {
 
 		for (TripleModel model : listModelExVerb) {
 
-			Set<String> subEx = ExtendRuleProcessor.extractSubjByListExtend(
+			Set<SingleNode<Integer,String>> subEx = ExtendRuleProcessor.extractSubjByListExtend(
 					model, sm.getGraph());
 
-			for (String subj : subEx) {
+			for (SingleNode<Integer,String> subj : subEx) {
 
 				listModelExSubj.add(new TripleModel(sm, subj, model.getVerb(),
 						model.getObjt()));
@@ -171,10 +143,10 @@ public class ExtractModelsBasedOnStanfordDependancyProcessor {
 
 		for (TripleModel model : listModelExSubj) {
 
-			Set<String> objEx = ExtendRuleProcessor.extractObjByListExtend(
+			Set<SingleNode<Integer,String>> objEx = ExtendRuleProcessor.extractObjByListExtend(
 					model, sm.getGraph());
 
-			for (String obj : objEx) {
+			for (SingleNode<Integer,String> obj : objEx) {
 
 				listModelExObj.add(new TripleModel(sm, model.getSubj(), model
 						.getVerb(), obj));
@@ -258,11 +230,12 @@ public class ExtractModelsBasedOnStanfordDependancyProcessor {
 
 				List<TripleModel>listTripleModel=ExtractModelsBasedOnStanfordDependancyProcessor.extract(sm, rules);
 				
+				List<TripleModel>listTripleModel2=ExtractModelsBasedOnStanfordDependancyProcessor.extend(sm, listTripleModel);	
 				
 				
 					System.out.println(StringUtils.repeat("*", 10));
 
-					for (TripleModel model : listTripleModel) {
+					for (TripleModel model : listTripleModel2) {
 
 						System.out.println(model);
 

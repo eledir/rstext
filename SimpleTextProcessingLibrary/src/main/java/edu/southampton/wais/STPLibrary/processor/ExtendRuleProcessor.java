@@ -24,6 +24,7 @@ import edu.southampton.wais.STPLibrary.stanfordRule.*;
 import edu.southampton.wais.STPLibrary.stanfordWrapper.StanfordCoreNLPService;
 import edu.southampton.wais.STPLibrary.utility.DirectedMultigraphUtility;
 import edu.southampton.wais.STPLibrary.utility.SentenceModelUtility;
+import edu.southampton.wais.utility.datastructure.SingleNode;
 import edu.southampton.wais.utility.general.IOFileUtility;
 import edu.stanford.nlp.graph.DirectedMultiGraph;
 
@@ -32,12 +33,12 @@ public class ExtendRuleProcessor {
 	private static final List<String> conj = Lists.newArrayList("conj_or",
 			"conj_and", "conj_but", "prep_of", "prep_about");
 
-	public static Set<String> extractSubjByListExtend(TripleModel model,
-			DirectedMultiGraph<String, String> g) {
+	public static Set<SingleNode<Integer, String>> extractSubjByListExtend(TripleModel model,
+			DirectedMultiGraph<SingleNode<Integer,String>, String> g) {
 
-		Set<String> candidate = Sets.newHashSet();
+		Set<SingleNode<Integer, String>> candidate = Sets.newHashSet();
 
-		Set<String> result = Sets.newHashSet();
+		Set<SingleNode<Integer, String>> result = Sets.newHashSet();
 
 		// take all the edge
 		List<String> listEdge = g.getIncomingEdges(model.getSubj());
@@ -54,15 +55,17 @@ public class ExtendRuleProcessor {
 
 			for (String edge : listEdgeFiltered) {
 
-				Set<String> expantion = DirectedMultigraphUtility
+				Set<SingleNode<Integer, String>> expantion = DirectedMultigraphUtility
 						.getSourceVertexGivenEdge(edge, model.getSubj(), g);
 
 				expantion.addAll(DirectedMultigraphUtility
 						.getTargetVertexGivenEdge(edge, model.getSubj(), g));
 
-				for (String item : expantion) {
+				for (SingleNode<Integer, String> item : expantion) {
 
-					String[] itemSplit = item.split("-");
+					String itemString=item.getObject();
+					
+					String[] itemSplit = itemString.split("-");
 
 					if (POSTagStanford.isNoun(itemSplit[1])
 							&& !item.equals(model.getObjt())) {
@@ -78,18 +81,20 @@ public class ExtendRuleProcessor {
 			// check if the candidate is in relation with a verb different from
 			// the one belonging to the triples.
 
-			for (String item : candidate) {
+			for (SingleNode<Integer, String> item : candidate) {
 
 				// for earch candidate select the neiborhoood
 
-				Set<String> setN = g.getNeighbors(item);
+				Set<SingleNode<Integer, String>> setN = g.getNeighbors(item);
 
 				// cheack if the neiborrhod is in realation with a different
 				// verb;
 				boolean accepeted = true;
 
-				for (String n : setN) {
+				for (SingleNode<Integer, String> nSingle : setN) {
 
+					String n=nSingle.getObject();
+					
 					if (n.equals(model.getVerb())) {
 						accepeted = false;
 						break;
@@ -110,12 +115,12 @@ public class ExtendRuleProcessor {
 
 	}
 
-	public static Set<String> extractObjByListExtend(TripleModel model,
-			DirectedMultiGraph<String, String> g) {
+	public static Set<SingleNode<Integer, String>> extractObjByListExtend(TripleModel model,
+			DirectedMultiGraph<SingleNode<Integer, String>, String> g) {
 
-		Set<String> candidate = Sets.newHashSet();
+		Set<SingleNode<Integer, String>> candidate = Sets.newHashSet();
 
-		Set<String> result = Sets.newHashSet();
+		Set<SingleNode<Integer, String>> result = Sets.newHashSet();
 
 		// take all the edge
 		List<String> listEdge = g.getIncomingEdges(model.getObjt());
@@ -132,15 +137,17 @@ public class ExtendRuleProcessor {
 
 			for (String edge : listEdgeFiltered) {
 
-				Set<String> expantion = DirectedMultigraphUtility
+				Set<SingleNode<Integer, String>> expantion = DirectedMultigraphUtility
 						.getSourceVertexGivenEdge(edge, model.getObjt(), g);
 
 				expantion.addAll(DirectedMultigraphUtility
 						.getTargetVertexGivenEdge(edge, model.getObjt(), g));
 
-				for (String item : expantion) {
+				for (SingleNode<Integer, String> item : expantion) {
 
-					String[] itemSplit = item.split("-");
+					String itemString=item.getObject();
+					
+					String[] itemSplit = itemString.split("-");
 
 					if ((POSTagStanford.isNoun(itemSplit[1])
 							|| POSTagStanford.isAdjective(itemSplit[1]) || POSTagStanford
@@ -158,18 +165,20 @@ public class ExtendRuleProcessor {
 			// check if the candidate is in relation with a verb different from
 			// the one belonging to the triples.
 
-			for (String item : candidate) {
+			for (SingleNode<Integer, String> item : candidate) {
 
 				// for earch candidate select the neiborhoood
 
-				Set<String> setN = g.getNeighbors(item);
+				Set<SingleNode<Integer, String>> setN = g.getNeighbors(item);
 
 				// cheack if the neiborrhod is in realation with a different
 				// verb;
 				boolean accepeted = true;
 
-				for (String n : setN) {
+				for (SingleNode<Integer, String> nToken : setN) {
 
+					String n=nToken.getObject();
+					
 					if (n.equals(model.getVerb())) {
 						accepeted = false;
 						break;
@@ -190,10 +199,10 @@ public class ExtendRuleProcessor {
 
 	}
 
-	public static Set<String> extracVerbByListExtend(TripleModel model,
-			DirectedMultiGraph<String, String> g) {
+	public static Set<SingleNode<Integer, String>> extracVerbByListExtend(TripleModel model,
+			DirectedMultiGraph<SingleNode<Integer, String>, String> g) {
 
-		Set<String> candidate = Sets.newHashSet();
+		Set<SingleNode<Integer, String>> candidate = Sets.newHashSet();
 
 		// take all the edge
 
@@ -211,15 +220,17 @@ public class ExtendRuleProcessor {
 			// add each vertex to the candidate
 			for (String edge : listEdgeFiltered) {
 
-				Set<String> expantion = DirectedMultigraphUtility
+				Set<SingleNode<Integer, String>> expantion = DirectedMultigraphUtility
 						.getSourceVertexGivenEdge(edge, model.getVerb(), g);
 
 				expantion.addAll(DirectedMultigraphUtility
 						.getTargetVertexGivenEdge(edge, model.getVerb(), g));
 
-				for (String item : expantion) {
+				for (SingleNode<Integer, String> item : expantion) {
 
-					String[] itemSplit = item.split("-");
+					String itemString=item.getObject();
+					
+					String[] itemSplit = itemString.split("-");
 
 					if ( POSTagStanford
 								.isVerb(itemSplit[1])

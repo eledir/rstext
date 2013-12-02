@@ -7,6 +7,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
+import edu.southampton.wais.utility.datastructure.SingleNode;
 
 public class Predicate4Rule {
 
@@ -18,7 +19,7 @@ public class Predicate4Rule {
 
 	}
 
-	private static class MatcherNode implements Predicate<String> {
+	private static class MatcherNode implements Predicate<SingleNode<Integer,String>> {
 		private List<String> type;
 		private boolean normalizezd;
 
@@ -27,7 +28,7 @@ public class Predicate4Rule {
 			this.normalizezd = node.isPosNormalized();
 		}
 
-		public boolean apply(String input) {
+		public boolean apply(SingleNode<Integer,String> input) {
 
 			if (type.contains(RuleTemplateNode.RuleTemplateNodeEnum.Every
 					.toString())) {
@@ -35,7 +36,10 @@ public class Predicate4Rule {
 
 			} else {
 
-				String[] inputSplit = input.split("-");
+				
+				String stringInput=input.getObject();
+				
+				String[] inputSplit = stringInput.split("-");
 
 				if (!normalizezd) {
 
@@ -74,7 +78,7 @@ public class Predicate4Rule {
 
 	}
 
-	public static Predicate<String> filterRuleNodePredicate(
+	public static Predicate<SingleNode<Integer,String>> filterRuleNodePredicate(
 			RuleTemplateNode node) {
 		return new MatcherNode(node);
 	}
