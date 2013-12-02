@@ -65,6 +65,7 @@ public class POSTagStanford {
 	public final static String ADJ = "a";
 
 	public final static String VERB = "v";
+    
 	public final static String NOUN = "n";
 
 	public final static String ADVERB = "adv";

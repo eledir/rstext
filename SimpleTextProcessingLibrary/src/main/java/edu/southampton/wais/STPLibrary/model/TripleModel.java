@@ -108,8 +108,8 @@ public class TripleModel implements Serializable {
 	public String toString() {
 		return Objects.toStringHelper(this.getClass())
 				.add("Sentence : ", this.context).add("", "\n")
-				.add("<", this.subj).addValue(this.verb).addValue(this.objt)
-				.add(" polarity ", this.polarity).add(" >", "\n").toString();
+				.addValue("<"+this.subj).addValue(this.verb).addValue(this.objt)
+				.add(" polarity ", this.polarity).addValue(" >\n").toString();
 	}
 
 }

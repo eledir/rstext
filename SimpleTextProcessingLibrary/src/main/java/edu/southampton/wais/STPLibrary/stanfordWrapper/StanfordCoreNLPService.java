@@ -1,31 +1,17 @@
 package edu.southampton.wais.STPLibrary.stanfordWrapper;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
 import java.util.Properties;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
+import java.util.regex.Pattern;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Table;
 
-import yagoo.javatools.parsers.PlingStemmer;
-
-import edu.southampton.wais.STPLibrary.model.AnnotatedWord;
 import edu.southampton.wais.STPLibrary.model.SentenceModel;
-import edu.southampton.wais.STPLibrary.model.TripleModel;
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
 import edu.southampton.wais.STPLibrary.nlp.StringProcessor;
+<<<<<<< HEAD
 import edu.southampton.wais.STPLibrary.processor.ExtractTripleStanfordDependancy;
 import edu.southampton.wais.STPLibrary.stanfordRule.Rule;
 
@@ -36,64 +22,27 @@ import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule3;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule5;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule8;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule9;
+=======
+>>>>>>> cc73574d1b0479907502be711d88813895a2c69e
 import edu.southampton.wais.STPLibrary.utility.SentenceModelUtility;
 import edu.southampton.wais.utility.datastructure.IntegerSingleNode;
 import edu.southampton.wais.utility.general.IOFileUtility;
 import edu.southampton.wais.utility.general.Logger;
-
-import edu.stanford.nlp.dcoref.CorefChain;
-import edu.stanford.nlp.dcoref.CorefCoreAnnotations.CorefChainAnnotation;
 import edu.stanford.nlp.ie.AbstractSequenceClassifier;
-import edu.stanford.nlp.ie.NERClassifierCombiner;
 import edu.stanford.nlp.ie.crf.CRFClassifier;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
-import edu.stanford.nlp.ling.CoreAnnotations.NamedEntityTagAnnotation;
-import edu.stanford.nlp.ling.CoreAnnotations.NormalizedNamedEntityTagAnnotation;
-import edu.stanford.nlp.ling.CoreAnnotations.NotAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.PartOfSpeechAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
-import edu.stanford.nlp.ling.CoreAnnotations.StemAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TextAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
 import edu.stanford.nlp.ling.CoreLabel;
-import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
-import edu.stanford.nlp.pipeline.AnnotationPipeline;
-import edu.stanford.nlp.pipeline.DefaultPaths;
-import edu.stanford.nlp.pipeline.MorphaAnnotator;
-import edu.stanford.nlp.pipeline.POSTaggerAnnotator;
-import edu.stanford.nlp.pipeline.PTBTokenizerAnnotator;
-import edu.stanford.nlp.pipeline.ParserAnnotator;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
-import edu.stanford.nlp.pipeline.WordsToSentencesAnnotator;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
-import edu.stanford.nlp.tagger.maxent.MaxentTagger;
-import edu.stanford.nlp.util.ArrayCoreMap;
 import edu.stanford.nlp.util.CoreMap;
-import edu.stanford.nlp.util.Pair;
-import edu.stanford.nlp.util.PropertiesUtils;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.StringReader;
-import java.util.List;
-import java.util.regex.Pattern;
-
-import edu.stanford.nlp.ling.Sentence;
-import edu.stanford.nlp.ling.TaggedWord;
-import edu.stanford.nlp.ling.HasWord;
-import edu.stanford.nlp.ling.CoreLabel;
-import edu.stanford.nlp.process.CoreLabelTokenFactory;
-import edu.stanford.nlp.process.DocumentPreprocessor;
-import edu.stanford.nlp.process.PTBTokenizer;
-
-import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 public class StanfordCoreNLPService {
 
@@ -402,15 +351,14 @@ public class StanfordCoreNLPService {
 			
 			System.out.println(sm.getGraph());
 			
+<<<<<<< HEAD
 			Rule rule5= new TripleRule8();
 			
 			
 			List<TripleModel>triple=ExtractTripleStanfordDependancy.extract(sm,rule5);
+=======
+>>>>>>> cc73574d1b0479907502be711d88813895a2c69e
 			
-			
-			
-			System.out.println(triple);
-
 
 			
 			

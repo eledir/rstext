@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.jgrapht.DirectedGraph;
 
-import cc.mallet.util.FileUtils;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
@@ -22,6 +23,9 @@ import edu.southampton.wais.STPLibrary.model.TripleModel;
 import edu.southampton.wais.STPLibrary.nlp.POSTagStanford;
 import edu.southampton.wais.STPLibrary.nlp.StringProcessor;
 import edu.southampton.wais.STPLibrary.stanfordRule.Rule;
+import edu.southampton.wais.STPLibrary.stanfordRule.RuleMatcher;
+import edu.southampton.wais.STPLibrary.stanfordRule.RuleParser;
+import edu.southampton.wais.STPLibrary.stanfordRule.RuleTemplate;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule1;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule2;
 import edu.southampton.wais.STPLibrary.stanfordRule.TripleRule3;
@@ -63,7 +67,7 @@ public class ExtractTripleStanfordDependancy {
 	public static List<TripleModel> extract(SentenceModel sm,Rule r){
 		
 		
-         DirectedMultiGraph<String, String> g=sm.getGraph();
+        DirectedMultiGraph<String, String> g=sm.getGraph();
 		
 		
 		Set<String> setVertex=g.getAllVertices();
@@ -355,7 +359,13 @@ private static Set<String> filterVerbVertex(Set<String> vertex){
 						.readHashSetStringFromFile(new File(nameFileStopList1));
 
 				
-				String[] textVet=FileUtils.readFile(new File("/Users/antoniopenta/Documents/DatiRicerca/iextreme/collections/trainFiles/KM.txt"));
+				List<String> textVet=FileUtils.readLines(new File("/Users/antoniopenta/Documents/DatiRicerca/iextreme/collections/trainFiles/KM.txt"));
+				
+				
+				
+				textVet.clear();
+				textVet.add("they think they are following Islam.");
+				
 				
 				for(String tex:textVet){
 				
@@ -374,7 +384,7 @@ private static Set<String> filterVerbVertex(Set<String> vertex){
 	            
 	            boolean valid=SentenceModelUtility.countMeaningfulTerms(sm, 3);
 				
-				System.out.println(" ---------------");
+				System.out.println(StringUtils.repeat("_", 10));
 
 	            
 	            System.out.println(sm.getBody());
@@ -384,14 +394,14 @@ private static Set<String> filterVerbVertex(Set<String> vertex){
 	            System.out.println(sm.getGraph());
 				
 
-				System.out.println(" ---------------");
+	        	System.out.println(StringUtils.repeat("_", 10));
 
 
 				
 				Set<Rule>listRule=Sets.newHashSet();
 				
 				listRule.add(new TripleRule1());
-				listRule.add(new TripleRule2());
+				/*listRule.add(new TripleRule2());
 				listRule.add(new TripleRule3());
 				listRule.add(new TripleRule4());
 				listRule.add(new TripleRule5());
@@ -403,7 +413,7 @@ private static Set<String> filterVerbVertex(Set<String> vertex){
 				listRule.add(new TripleRule11());
 				listRule.add(new TripleRule12());
 				listRule.add(new TripleRule13());
-				
+				*/
 				
 				
 				
@@ -421,6 +431,40 @@ private static Set<String> filterVerbVertex(Set<String> vertex){
 				System.out.println(tripleE);
 
 				System.out.println("######################");
+			
+				
+				List<String> ruleDef = FileUtils.readLines(new File(
+						"rules/confRules.txt"));
+
+				RuleParser parser = new RuleParser(ruleDef);
+
+				Set<RuleTemplate> rules = parser.parser();
+				
+				
+				for(RuleTemplate ruleTemplate:rules){
+				
+					
+					
+				      
+					
+					 List<TripleModel> listTriple= RuleMatcher.extractTriples(sm, ruleTemplate);
+				
+				      System.out.println(StringUtils.repeat("*", 10));
+				      
+				      for(TripleModel model:listTriple){
+				    	  
+				    	  System.out.println(model);
+				    	  
+				      } 
+				
+				      System.out.println(StringUtils.repeat("*", 10));
+				      
+				
+				}
+				
+				
+				
+				
 				
 				}
 				

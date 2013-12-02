@@ -17,37 +17,16 @@ public class RegularExpressionTesting {
 		// TODO Auto-generated method stub
 
 		
-		try {
-			List<String> s=FileUtils.readLines(new File("exampleRE.txt"));
+			
+			Pattern patter=Pattern.compile("(subj|obj|verb)=.+");
+			
+			String test="subjobj=1,2";
+			
+			System.out.println(patter.matcher(test).matches());
 			
 			
 			
-			
-				
-			//String a=s.replaceAll("\\n\\s*\\n", ".");
-			
-			String a="";
-           
-			System.out.println("@@@@");
-			
-			
-			
-			String[] items=a.split("\\.");
-			
-			for(String item:items){
-				
-				System.out.println("----");
-				
-					System.out.println(item);
-				
-				System.out.println("----");
-				
-			}
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 		
 		
