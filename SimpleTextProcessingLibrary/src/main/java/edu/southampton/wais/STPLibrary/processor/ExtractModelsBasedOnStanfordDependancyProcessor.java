@@ -169,7 +169,7 @@ public class ExtractModelsBasedOnStanfordDependancyProcessor {
 
 		String dir = "/Users/antoniopenta/Documents/workspaceReligionSentiment/nlpdata";
 
-		// dir="/home/antoniodesktop/Documents/data/nlpdata";
+		 dir="/home/antoniodesktop/Documents/data/nlpdata";
 
 		Pattern patternSentValidation = Pattern.compile("[a-zA-Z\\-]+");
 
@@ -186,10 +186,12 @@ public class ExtractModelsBasedOnStanfordDependancyProcessor {
 			HashSet<String> listStop = IOFileUtility
 					.readHashSetStringFromFile(new File(nameFileStopList1));
 
-			List<String> textVet = FileUtils
+			/*List<String> textVet = FileUtils
 					.readLines(new File(
 							"/Users/antoniopenta/Documents/DatiRicerca/iextreme/collections/trainFiles/KM.txt"));
-
+*/
+			List<String> textVet=Lists.newArrayList();
+			
 			textVet.clear();
 			//textVet.add("it seduced people and prevented that religion is god");
 			String texSent="To accept the idea of pluralism means that you do not care much about religion";

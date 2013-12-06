@@ -1,6 +1,13 @@
 package edu.southampton.wais.utility.datastructure;
 
-public class  SingleNode <T1 extends Number,T2 extends Object>{
+import java.io.Serializable;
+
+public class  SingleNode <T1 extends Number,T2 extends Object>implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private T1 number;
 	
